@@ -96,4 +96,5 @@ def main():
         else:
             Hk = Ht.copy() #Otherwise, the NRS Scheme continues to optimize the Enthalpy.
             T = Hk/(rho*c)
+            
     return
