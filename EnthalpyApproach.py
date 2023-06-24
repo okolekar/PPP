@@ -130,7 +130,15 @@ def main():
             Te = np.matmul(A(i).T,T) #Elemental T extracted from universal T 
             [Ge,dGe] = GaussLoop(He_1,He,Te,i)
             G = G + np.matmul(A(i),Ge)   #G is a column vector
-            dG = dG + np.matmul(np.matmul(A(i),dGe),A(i).T)    #(n,2)*(2,2)*(2,n)      
+            dG = dG + np.matmul(np.matmul(A(i),dGe),A(i).T)    #(n,2)*(2,2)*(2,n) 
+        
+        #Activating the boundry condition
+        G[n-1] = 0
+        dG[n-1] = 0
+        dG[:,n-1] = 0    
+        #Boundary condition activated
+        
+            
         Ht = Hk - np.matmul(np.linalg.inv(dG),G)
         if (abs(Ht - Hk)<np.exp(-5)):
             break #If the difference between the new and previous enthalpy is lower than tolerance, then the NRS Scheme is over.
