@@ -6,7 +6,7 @@ import numpy as np
 #As of now I have taken the materials as Al
 
 delt = 0.01
-ratioI = 0.005
+ratioI = 0.0123
 n = 11                #number of nodes  
 c = 9.0*10**2         #specific heat capacity           # in J/kgK 
 rho = 2.7 * 10**3     #density of the material      #kg/m**3
@@ -14,7 +14,6 @@ Tliq = 933.3          #Kelvin 	  	  #Liq. Temp. [K] 	  	  #In the unit ?????????
 D = 139.64            
 Ta = -0.4             # ambient temperature in Kelvin.
 T = Ta*np.ones(11).reshape(11,1)    # The temperature array for the initial start. 	  	  #In the unit K.
-#T[n] = Ta # Set the Boundary Temperature for the last node to the ambient. 	  	  #In the unit K.
 lambf = 0.25 	  	  # The lambda constant 
 Hk = rho*c*T          # The enthalpy was calculated as taking into account the below temperature array
 
@@ -38,37 +37,6 @@ def mesh_list():
     for i in range(10):
         l.append(i/10)        
     return l
-
-'''def M(zeta,i): # The matrix element.
-    if i == 0:
-        b = ratioI*phi(zeta) - Ta*phi_derivative()[1]*phi_derivative() #Column vector
-    else:
-        b = - Ta*phi_derivative()[1]*phi_derivative()
-    #Achtung in the paper it is phi(N) but here I used the phi(1) cause they are same
-    return b,np.matmul(phi(zeta),phi(zeta).reshape(1,2)) #M square matrix
-
-def N(): #square matrix
-    return np.matmul(phi_derivative(),phi_derivative().reshape(1,2))
-
-def F(Te,zeta,i):#Column vector
-    b = M(zeta,i)[0]
-    return D*(b-np.matmul(N(),Te))
-
-def G(Hk_1,Hk,Te,zeta,i): #Column vector
-    funcall = M(zeta,i)
-    M = funcall[1]
-    F = F(Te,zeta,i)
-    return np.matmul(M,(Hk_1-Hk)) - delt*F 
-
-def dG(Te,zeta,i): #Matrix
-    if Te<0:    
-        dT_dH = D
-    elif Te <= 0 and Te <= Tliq:
-        dT_dH = D+D*lambf/Tliq
-    elif Te >= Tliq: 
-        dT_dH = D 
-    M = M(zeta,i)[1]
-    return M + delt*D*dT_dH*N()'''
 
 def Matrial_model(zeta,i,Te,Hk_1,Hk):
 
@@ -107,8 +75,6 @@ def GaussLoop(He_1,He,Te,i):
     dGe = np.zeros([2,2])
     for zeta in Gauss_points: # zeta is the Gauss coordinate value of the single element.
                 ''' Material model below'''
-                #Gt = G(He_1,He,Te,zeta,i) 
-                #dGt = dG(Te,zeta,i) #t denotes temporary variables
                 MaterialCall = Matrial_model(zeta,i,Te,He_1,He)
                 Gt = MaterialCall[0]
                 dGt = MaterialCall[1]
