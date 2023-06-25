@@ -5,6 +5,8 @@ import numpy as np
 #below defined are the global variables
 #As of now I have taken the materials as Al
 
+np.set_printoptions(precision=2, suppress=True)
+
 delt = 0.01
 ratioI = 0.0123
 n = 11                #number of nodes  
@@ -39,6 +41,7 @@ def mesh_list():
     return l
 
 def Matrial_model(zeta,i,Te,Hk_1,Hk):
+    '''Physics subroutine or material subroutine'''
 
     global delt,ratioI,n,c,rho,D,Ta,lambf,Tliq
 
@@ -60,16 +63,15 @@ def Matrial_model(zeta,i,Te,Hk_1,Hk):
     F = D*(b-np.matmul(N,Te))
     G = np.matmul(M,(Hk_1-Hk)) - delt*F
     dG = M + delt*D*dT_dH*N
-
     return G,dG
 
-def A(p):               # here the n represents the total number of elements and p represents the current element
+def Aly(p):               # here the n represents the total number of elements and p represents the current element
     A = np.zeros((n,2)) # Assembly matrix
     A[p,0] = 1
     A[p+1,1] = 1 
     return A
 
-def GaussLoop(He_1,He,Te,i):
+def GaussLoop(He_1,He,Te,i):    
     Gauss_points = [-0.577350269189626, 0.577350269189626] # Gauss points for the integration
     Ge = np.zeros([2,1])
     dGe = np.zeros([2,2])
@@ -84,35 +86,36 @@ def GaussLoop(He_1,He,Te,i):
 
 def main():
     global Hk,delt,ratioI,n,c,rho,D,Ta,lambf,T,Tliq
-    Ht= Hk.copy() # at the start we assume that the new and previous enthalpies are same
-    #Ht = new enthalpy after the newton Raphson scheme          #Hk is the previous Enthalpy      #H_1e is the elemental new enthalpy     #He is the elemental old enthalpy 
-    G = np.zeros([n,1])
-    dG = np.zeros([n,n])
-    while True:
-        #Physics subroutine or material subroutine
-        for i in range(1,n-1): #n is the number of elements in the mesh. i is the element number.
-            He = np.matmul(A(i).T,Hk) # Assembly matrix for element i. He is a 2x1 vector.
-            He_1 = np.matmul(A(i).T,Ht)
-            Te = np.matmul(A(i).T,T) #Elemental T extracted from universal T 
-            [Ge,dGe] = GaussLoop(He_1,He,Te,i)
-            G = G + np.matmul(A(i),Ge)   #G is a column vector
-            dG = dG + np.matmul(np.matmul(A(i),dGe),A(i).T)    #(n,2)*(2,2)*(2,n) 
-        
-        #Activating the boundry condition
-        G[n-1] = 0
-        dG[n-1] = 0
-        dG[:,n-1] = 0    
-        #Boundary condition activated
-        
-            
-        Ht = Hk - np.matmul(np.linalg.inv(dG),G)
-        if (abs(Ht - Hk)<np.exp(-5)):
-            break #If the difference between the new and previous enthalpy is lower than tolerance, then the NRS Scheme is over.
-        else:
-            Hk = Ht.copy() #Otherwise, the NRS Scheme continues to optimize the Enthalpy.
-            T = Hk/(rho*c)
-    return Ht,T
+    for t in np.arange(0,1,delt):
+         Ht= Hk.copy() # at the start we assume that the new and previous enthalpies are same
+         #Ht = new enthalpy after the newton Raphson scheme          #Hk is the previous Enthalpy      #H_1e is the elemental new enthalpy     #He is the elemental old enthalpy 
+         G = np.zeros([n,1])
+         dG = np.zeros([n,n])
+         while True:
+            for i in range(n-1): #n is the number of elements in the mesh. i is the element number.
+                A = Aly(i) 
+                He = np.matmul(A.T,Hk) # Assembly matrix for element i. He is a 2x1 vector.
+                He_1 = np.matmul(A.T,Ht)
+                Te = np.matmul(A.T,T) #Elemental T extracted from universal T 
+                [Ge,dGe] = GaussLoop(He_1,He,Te,i)
+                G = G + np.matmul(A,Ge)   #G is a column vector
+                dG = dG + np.matmul(np.matmul(A,dGe),A.T)    #(n,2)*(2,2)*(2,n) 
 
+            #Activating the boundry condition
+            G[n-1] = 0
+            dG[n-1] = 0
+            dG[:,n-1] = 0    
+
+            np.set_printoptions(edgeitems=11, threshold=np.inf, linewidth=np.inf, suppress=True, formatter={'int': lambda x: str(x)})
+            print(np.array2string(dG,separator = ',')) ####DELETE THIS LINE
+                
+            Ht = Hk - np.matmul(np.linalg.inv(dG),G)
+            if (abs(Ht - Hk)<np.exp(-5)):
+                break #If the difference between the new and previous enthalpy is lower than tolerance, then the NRS Scheme is over.
+            else:
+                Hk = Ht.copy() #Otherwise, the NRS Scheme continues to optimize the Enthalpy.
+                T = Hk/(rho*c)
+    return Ht,T
 
 [Ht,T] = main()
 
