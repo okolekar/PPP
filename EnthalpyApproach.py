@@ -24,13 +24,14 @@ def phi(zeta):
     shape_fun=np.array([0.5*(1-zeta),0.5*(1+zeta)]) # The shape function is Linear.
     return shape_fun.reshape(2,1)
 
-def phi_derivative(): # The shape function's first and second order partial deravatives.
+def phi_derivative(i): # The shape function's first and second order partial deravatives.
     shape_fun = np.array([0.5,0.5])
-    return (J()**-1)*shape_fun.reshape(2,1)
+    return (J(i)**-1)*shape_fun.reshape(2,1)
 
-def J():
-    x1 = mesh_list()[0]
-    x2 = mesh_list()[1]
+def J(i):
+    node_list = mesh_list()
+    x1 = node_list[i]
+    x2 = node_list[i+1]
     return x2-x1
 
 def mesh_list():
@@ -45,10 +46,10 @@ def Matrial_model(zeta,i,Te,Hk_1,Hk):
 
     global delt,ratioI,n,c,rho,D,Ta,lambf,Tliq
 
-    if i == 0:
-        b = ratioI*phi(zeta) - Ta*phi_derivative()[1]*phi_derivative() #Column vector
+    if i == 0 and zeta<0: #This condition shows that we are on the first node
+        b = ratioI*phi(zeta) - Ta*phi_derivative(i)[1]*phi_derivative(i) #Column vector
     else:
-        b = - Ta*phi_derivative()[1]*phi_derivative()
+        b = - Ta*phi_derivative(i)[1]*phi_derivative(i)
 
     if Te.all()<0:    
         dT_dH = D
@@ -59,7 +60,7 @@ def Matrial_model(zeta,i,Te,Hk_1,Hk):
     
 
     M = np.matmul(phi(zeta),phi(zeta).reshape(1,2))
-    N = np.matmul(phi_derivative(),phi_derivative().reshape(1,2))
+    N = np.matmul(phi_derivative(i),phi_derivative(i).reshape(1,2))
     F = D*(b-np.matmul(N,Te))
     G = np.matmul(M,(Hk_1-Hk)) - delt*F
     dG = M + delt*D*dT_dH*N
