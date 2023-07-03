@@ -1,17 +1,19 @@
 import numpy as np
 import math as m
-class initial_condition():
-    def __init__(self,ratioI, delt, Ta,s = 0.01):
 
-        self.ratioI = ratioI
-        self.delt = delt
+class Initial_Temp():
+    'This class throws back a vector of temperature. The input required are I/Iref, Ta, delta_t and node list'
+    def __init__(self, ratioI, Ta, delt, n):
+        self.F = ratioI
         self.Ta = Ta
-        self.s = s
+        self.dt = delt
+        self.list = n
 
-    def Optimize(self):
-        result = self.ratioI*(2*np.sqrt(self.delt/np.pi)*np.exp(-self.s**2/(4*self.delt))-self.s*m.erfc(self.s/(2*np.sqrt(self.t))))+self.Ta
-        while result > 10**-5:
-            #Still need to code
-            print('work under process')
-            break            
-        return self.s
+    def Tdist_Enthalpy(self):
+        T = np.zeros(len(self.list))
+        for i in range(len(T)):
+            if i == len(T)-1:
+                T[i] = self.Ta
+            else:
+                T[i] = self.F*(2*np.sqrt(self.dt/np.pi)*np.exp(-self.list[i]**2/(4*self.dt))-self.list[i]*m.erfc(self.list[i]/(2*np.sqrt(self.dt)))) + self.Ta
+        return T
