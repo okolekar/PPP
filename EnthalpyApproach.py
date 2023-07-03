@@ -1,4 +1,6 @@
 import numpy as np
+import Initial_Temperature_Dist as IT
+import sys
 
 #The length of the material is assumed to be 1m
 #The number of ELEMENTS decided are  10
@@ -7,8 +9,8 @@ import numpy as np
 
 np.set_printoptions(precision=2, suppress=True)
 
-delt = 0.01
-ratioI = 0.0123
+delt = 4*10**-3
+ratioI = 0.3333   #I/Iref  Iref/I = 3
 n = 11                #number of nodes  
 c = 9.0*10**2         #specific heat capacity           # in J/kgK 
 rho = 2.7 * 10**3     #density of the material      #kg/m**3
@@ -18,7 +20,6 @@ Ta = -0.4             # ambient temperature in Kelvin.
 T = Ta*np.ones(11).reshape(11,1)    # The temperature array for the initial start. 	  	  #In the unit K.
 lambf = 0.25 	  	  # The lambda constant 
 Hk = rho*c*T          # The enthalpy was calculated as taking into account the below temperature array
-
 
 def phi(zeta):
     shape_fun=np.array([0.5*(1-zeta),0.5*(1+zeta)]) # The shape function is Linear.
@@ -35,12 +36,17 @@ def J(i):
     return x2-x1
 
 def mesh_list():
+    global n
     l = []
     ele_list = {}
-    for i in range(10):
-        l.append(i/10)        
+    for i in range(n):
+        l.append(i/10)           
     return l
 
+############ Change the structure of the program later####################################
+#nodelist = mesh_list()
+#x = IT.Initial_Temp(ratioI,Ta,1.14,nodelist)
+#T = x.Tdist_Enthalpy().copy().reshape(11,1)
 def Matrial_model(zeta,i,Te,Hk_1,Hk):
     '''Physics subroutine or material subroutine'''
 
@@ -105,13 +111,13 @@ def main():
             #Activating the boundry condition
             G[n-1] = 0
             dG[n-1] = 0
-            dG[:,n-1] = 0    
+            dG[:,n-1] = 0
+            dG[n-1,n-1] = 1     
 
-            np.set_printoptions(edgeitems=11, threshold=np.inf, linewidth=np.inf, suppress=True, formatter={'int': lambda x: str(x)})
-            print(np.array2string(dG,separator = ',')) ####DELETE THIS LINE
-                
+            '''np.set_printoptions(edgeitems=11, threshold=np.inf, linewidth=np.inf, suppress=True, formatter={'int': lambda x: str(x)})
+            print(np.array2string(dG,separator = ',')) ####DELETE THIS LINE'''   
             Ht = Hk - np.matmul(np.linalg.inv(dG),G)
-            if (abs(Ht - Hk)<np.exp(-5)):
+            if (abs(Ht - Hk).all()<np.exp(-5)):
                 break #If the difference between the new and previous enthalpy is lower than tolerance, then the NRS Scheme is over.
             else:
                 Hk = Ht.copy() #Otherwise, the NRS Scheme continues to optimize the Enthalpy.
