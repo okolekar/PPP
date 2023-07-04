@@ -15,11 +15,24 @@ n = 11                #number of nodes
 c = 9.0*10**2         #specific heat capacity           # in J/kgK 
 rho = 2.7 * 10**3     #density of the material      #kg/m**3
 Tliq = 933.3          #Kelvin 	  	  #Liq. Temp. [K] 	  	  #In the unit ??????????????????????
-D = 139.64            
+D = 0.7970           
 Ta = -0.4             # ambient temperature in Kelvin.
-T = Ta*np.ones(11).reshape(11,1)    # The temperature array for the initial start. 	  	  #In the unit K.
+#T = Ta*np.ones(11).reshape(11,1)    # The temperature array for the initial start. 	  	  #In the unit K.
 lambf = 0.25 	  	  # The lambda constant 
-Hk = rho*c*T          # The enthalpy was calculated as taking into account the below temperature array
+
+# Hm is considered to be zero as it is dimensionless and at the start of melting the Hm = 0 
+
+def mesh_list():
+    global n
+    l = []
+    ele_list = {}
+    for i in range(n):
+        l.append(i/10)           
+    return l
+
+T = IT.Initial_Temp(ratioI,Ta,1.14,mesh_list())\
+    .Tdist_Enthalpy().copy().reshape(11,1) #The temperature array for the initial start.    #Dimensionless. 
+Hk = D*T          # The enthalpy was calculated as taking into account the above temperature array
 
 def phi(zeta):
     shape_fun=np.array([0.5*(1-zeta),0.5*(1+zeta)]) # The shape function is Linear.
@@ -35,41 +48,26 @@ def J(i):
     x2 = node_list[i+1]
     return x2-x1
 
-def mesh_list():
-    global n
-    l = []
-    ele_list = {}
-    for i in range(n):
-        l.append(i/10)           
-    return l
-
-############ Change the structure of the program later####################################
-#nodelist = mesh_list()
-#x = IT.Initial_Temp(ratioI,Ta,1.14,nodelist)
-#T = x.Tdist_Enthalpy().copy().reshape(11,1)
 def Matrial_model(zeta,i,Te,Hk_1,Hk):
     '''Physics subroutine or material subroutine'''
 
-    global delt,ratioI,n,c,rho,D,Ta,lambf,Tliq
+    global delt,ratioI,n,D,Ta,lambf
 
     if i == 0 and zeta<0: #This condition shows that we are on the first node
         b = ratioI*phi(zeta) - Ta*phi_derivative(i)[1]*phi_derivative(i) #Column vector
     else:
         b = - Ta*phi_derivative(i)[1]*phi_derivative(i)
 
-    if Te.all()<0:    
-        dT_dH = D
-    elif Te.all() <= 0:
-        dT_dH = D+D*lambf/Tliq
-    elif Te.all() >= 0: 
-        dT_dH = D 
+    
+    dT_dH = [[1/D if Hk[0] < 0 else 0 if Hk[0] ==  0 else 1/D, 0],
+             [0, 1/D if Hk[1] < 0 else 0 if Hk[1] ==  0 else 1/D]]
     
 
     M = np.matmul(phi(zeta),phi(zeta).reshape(1,2))
     N = np.matmul(phi_derivative(i),phi_derivative(i).reshape(1,2))
     F = D*(b-np.matmul(N,Te))
     G = np.matmul(M,(Hk_1-Hk)) - delt*F
-    dG = M + delt*D*dT_dH*N
+    dG = M + delt*D*np.matmul(N,dT_dH)
     return G,dG
 
 def Aly(p):               # here the n represents the total number of elements and p represents the current element
@@ -92,7 +90,7 @@ def GaussLoop(He_1,He,Te,i):
     return Ge,dGe
 
 def main():
-    global Hk,delt,ratioI,n,c,rho,D,Ta,lambf,T,Tliq
+    global Hk,delt,ratioI,n,D,Ta,lambf,T
     for t in np.arange(0,1,delt):
          Ht= Hk.copy() # at the start we assume that the new and previous enthalpies are same
          #Ht = new enthalpy after the newton Raphson scheme          #Hk is the previous Enthalpy      #H_1e is the elemental new enthalpy     #He is the elemental old enthalpy 
@@ -121,7 +119,7 @@ def main():
                 break #If the difference between the new and previous enthalpy is lower than tolerance, then the NRS Scheme is over.
             else:
                 Hk = Ht.copy() #Otherwise, the NRS Scheme continues to optimize the Enthalpy.
-                T = Hk/(rho*c)
+                T = Hk/(D)
     return Ht,T
 
 [Ht,T] = main()
