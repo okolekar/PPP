@@ -1,7 +1,7 @@
 import numpy as np
 import Initial_Temperature_Dist as IT
 import postProcessor as pp
-import sys
+import variableUpdater as vu
 
 #The length of the material is assumed to be 1m
 #The number of ELEMENTS decided are  10
@@ -12,7 +12,7 @@ np.set_printoptions(precision=2, suppress=True)
 
 delt = 4*10**-3
 ratioI = 0.3333   #I/Iref  Iref/I = 3
-n = 21                #number of nodes  
+n = 101               #number of nodes  
 c = 9.0*10**2         #specific heat capacity           # in J/kgK 
 rho = 2.7 * 10**3     #density of the material      #kg/m**3
 Tliq = 933.3          #Kelvin 	  	  #Liq. Temp. [K] 	  	  #In the unit ??????????????????????
@@ -31,10 +31,11 @@ def mesh_list():
         l.append(i/(n-1))           
     return l
 
-T = IT.Initial_Temp(ratioI,Ta,delt,mesh_list())\
+T = IT.Initial_Temp(ratioI,Ta,2,mesh_list())\
     .Tdist_Enthalpy().copy().reshape(n,1) #The temperature array for the initial start.  #Dimensionless.
 #print(f"The initial temprature distribution looks like\n {T} ") #1.14
-H = D*T          # The enthalpy was calculated as taking into account the above temperature array
+
+H = vu.Update(D,lambf,T)          # The enthalpy was calculated as taking into account the above temperature array
 
 def phi(zeta):
     shape_fun=np.array([0.5*(1-zeta),0.5*(1+zeta)]) # The shape function is Linear.
@@ -135,11 +136,11 @@ def main():
             #Condition = TCR.condition(Ht,Hk)
             diff = np.abs(Ht-Hk)
             if np.all(diff<np.exp(-5)):
-                Tnrs = Hk/(D)
+                Tnrs = vu.Update(D,lambf,None,Hk)
                 break #If the difference between the new and previous enthalpy is lower than tolerance, then the NRS Scheme is over.
             else:
                 Hk = Ht.copy() #Otherwise, the NRS Scheme continues to optimize the Enthalpy.
-                Tnrs = Hk/(D)
+                Tnrs = vu.Update(D,lambf,None,Hk)
         T = np.column_stack((T,Tnrs))
         H = np.column_stack((H,Ht))
     return Ht,T,t
@@ -147,5 +148,10 @@ try:
     [Ht,T,t] = main()
 except ValueError:
     print("Matrix Multiplication Failed")
+print("The enthalpy and Temperature distribution is shown below")
+print("the first two columns correspond to the Enthalpy and the latter two ")
+print("columns corresponds to Temperature")
+print("[Ht Ht+1 Tt Tt+1]")
 print(np.column_stack((H,T)))
-#pp.plotTemprature(T,t)
+
+pp.plotTemprature(T,t)
