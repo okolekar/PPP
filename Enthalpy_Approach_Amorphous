@@ -11,9 +11,9 @@ import dT_dH as dtdh
 
 np.set_printoptions(precision=2, suppress=True)
 soliduspt,liquidouspt,vapourpt = 1673,1723,3073  #in K
-delt = 0.00009
+delt = 0.0001
 ratioI = 0.3333         #I/Iref  Iref/I = 3
-n = 11                 #number of nodes  
+n = 101                 #number of nodes  
 c = 502.42              #specific heat capacity         # in J/kg/K 
 rho = 8000              #density of the material        #kg/m**3
 Tliq = (liquidouspt-soliduspt)/(vapourpt-soliduspt)               #Dimensionless 	  	            #Liq. Temp.          
@@ -96,8 +96,7 @@ def GaussLoop(He_1,Te,i,Het_1):
 
 def main():
     global H,delt,ratioI,n,D,Ta,lambf,T,liquidouspt,Tliq
-    for t in range(5): 
-        #print("The current time is {}".format(t))
+    for t in range(2): 
         Hk= H[:,t][:,np.newaxis].copy() #Variable used for NRS scheme
         if not np.array_equal(Hk,H[:,-1][:,np.newaxis]): #Testing if the extraction was a success
             print("Enthalpy at previous time step failed to extract.")
@@ -159,4 +158,4 @@ print("The enthalpy and Temperature distribution is shown below")
 display(H.shape[1],T.shape[1])
 print(np.column_stack((H,T)))
 
-pp.plotTemprature(T,t)
+pp.plotTemprature(H[:,0],H[:,-1],t)
