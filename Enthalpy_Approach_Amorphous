@@ -143,18 +143,20 @@ def main():
                 Tnrs = vu.Update_amorphus(D,lambf,Tliq,H=Hk,Hliq=rho*c*liquidouspt)
         T = np.column_stack((T,Tnrs))
         H = np.column_stack((H,Ht))
-    return Ht,T,t
+    return t
 
+def display(sizeH,sizeT):
+    H_Header = np.array([f'H{i+1}' for i in range(sizeH)])
+    T_Header = np.array([f'T{i+1}' for i in range(sizeT)])
+    print(np.hstack((H_Header,T_Header)))
 
 try:
-    [Ht,T,t] = main()
+    t = main()
 except ValueError:
     print("Matrix Multiplication Failed")
 
 print("The enthalpy and Temperature distribution is shown below")
-print("the first two columns correspond to the Enthalpy and the latter two ")
-print("columns corresponds to Temperature")
-print("[Ht Ht+1 Tt Tt+1]")
+display(H.shape[1],T.shape[1])
 print(np.column_stack((H,T)))
 
 pp.plotTemprature(T,t)
