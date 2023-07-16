@@ -1,0 +1,14 @@
+soliduspt = 1673  #in K
+liquidouspt = 1723
+vapourpt  = 3073
+delt = 0.01
+ratioI = 0.3333
+n = 11                 #number of nodes  
+c = 502.42              #specific heat capacity         # in J/kg/K 
+rho = 8000              #density of the material        #kg/m**3
+Tliq = (liquidouspt-soliduspt)/(vapourpt-soliduspt)               #Dimensionless 	  	            #Liq. Temp.          
+Lf = 261000             #J/kg
+D = rho*c*(vapourpt-soliduspt)/((rho*c*vapourpt+Lf*rho)-(rho*c*soliduspt))  #0.7970
+Ta = (293-soliduspt)/(vapourpt-soliduspt)             # ambient temperature in Dimensionless.
+lambf = Lf/(c*(vapourpt-soliduspt)) 	  	  # The lambda constant 
+Hliq = D*Tliq + D*lambf
