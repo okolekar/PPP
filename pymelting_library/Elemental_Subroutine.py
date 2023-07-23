@@ -1,4 +1,4 @@
-#Elemental Subroutine
+# Elemental Subroutine
 
 import numpy as np
 import inputs
@@ -9,19 +9,18 @@ from Material_Subroutine import Amorphus_model as Amor_routine
 
 class Elemental_Subroutine():
     def __init__(self):
-        self.n = inputs.n
         self.A = None
-        self.Gg = np.zeros(self.n).reshape(self.n,1)
-        self.dGg = np.zeros(self.n).reshape(self.n,1)
+        self.Gg = np.zeros(inputs.n).reshape(inputs.n,1)
+        self.dGg = np.zeros(inputs.n).reshape(inputs.n,1)
 
     def update_Aly(self,i):             # here the n represents the total number of elements and p represents the current element
-        self.A = np.zeros((self.n,2)) # Assembly matrix
+        self.A = np.zeros((inputs.n,2))   # Assembly matrix
         self.A[i,0] = 1
         self.A[i+1,1] = 1
 
-    def get_param(self,Hk,Hk_1,Tk_1):
-        SS304L = Amor_routine()
-        for i in range(self.n-1):
+    def get_param(self,Hk,Hk_1,Tk_1,Mesh):
+        SS304L = Amor_routine(Mesh)
+        for i in range(inputs.n-1):
             self.update_Aly(i)
             He = np.matmul(self.A.T,Hk)
             He_1 = np.matmul(self.A.T,Hk_1)
