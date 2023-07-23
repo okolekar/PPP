@@ -1,19 +1,18 @@
 import numpy as np
 from slope_matrix import temp_der as dT
 import inputs as mm
-from Mesh import Mesh 
 
 #Here He_1 corresponds to the updated enthalpy from the NRS
 #And the He corresponds to the enthalpy at the previous time step not NRS scheme.
 
 class Material_model():
-    def __init__(self):
+    def __init__(self,Mesh):
         self.b = 0
         self.M = 0
         self.N = 0
         self.F = 0
         self.G = 0
-        self.Ele = Mesh(mm.n)
+        self.Ele = Mesh
 
     def get_parent_param(self,boundry_node):
         
@@ -47,23 +46,27 @@ class Material_model():
             raise ValueError("Jacobi after Gauss summation is not equal to element length")
 
 class Amorphus_model(Material_model):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,Mesh):
+        super().__init__(Mesh)
         self.dG = None
 
     def get_param(self,He_1,Te_1,He,ele_no):
         self.Ele.update_element(ele_no)
         self.Quad_Integ(ele_no)
-        slope = dT(mm.D, He_1,mm.Tliq,mm.lambf,mm.Hliq)
+        slope = dT(1,He_1)
         self.F = mm.D*(self.b-np.matmul(self.N,Te_1))
         self.G = np.matmul(self.M,(He_1-He)) - mm.delt*self.F
         self.dG = self.M + mm.delt*mm.D*np.matmul(self.N,slope.dT_dH)
 
 class Crystal_model(Material_model):
-    def __init__(self):
-        super().__init__()
+    def __init__(self,Mesh):
+        super().__init__(Mesh)
         self.dG = None
 
-    def get_param(self,D,He_1,delt):
-        slope = dT.Cryst_slop(D, He_1)
-        self.dG = self.M + delt*D*np.matmul(self.N,slope.dT_dH)
+    def get_param(self,He_1,Te_1,He,ele_no):
+        self.Ele.update_element(ele_no)
+        self.Quad_Integ(ele_no)
+        slope = dT.Cryst_slop(2,He_1)
+        self.F = mm.D*(self.b-np.matmul(self.N,Te_1))
+        self.G = np.matmul(self.M,(He_1-He)) - mm.delt*self.F
+        self.dG = self.M + mm.delt*mm.D*np.matmul(self.N,slope.dT_dH)
