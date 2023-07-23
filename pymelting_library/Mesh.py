@@ -1,11 +1,8 @@
 import numpy as np
+import inputs as ip
 
 class Mesh():
-    def __init__(self,n):
-        if n < 2 or type(n) != int:
-            print("no of nodes cannot be < 2")
-            raise ValueError("no of nodes or node number cannot be negative.")
-        self.n = n
+    def __init__(self):
         self.nl = self.mesh_list() #node list
         self.phi = None
         self.dphi = None
@@ -46,8 +43,8 @@ class Mesh():
 
     def mesh_list(self):
         l = []
-        for q in range(self.n):
-            l.append(q/(self.n-1))
+        for q in range(ip.n):
+            l.append(q/(ip.n-1))
         if l[-1] != 1 or len(l) == 0:
             print("The mesh list is not generated correctly")           
         return l
