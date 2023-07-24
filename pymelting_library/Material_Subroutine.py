@@ -1,10 +1,31 @@
+'''Topic: PPP
+
+#############################################################################################################################
+Importing the required libraries
+inputs -> Script where all the inputs are defined
+slope_matrix -> Calculates the dT/dH matrix'''
+#############################################################################################################################
 import numpy as np
 from slope_matrix import temp_der as dT
 import inputs as mm
+'''
+#############################################################################################################################
+Class Material_model
+This is a parent class and hence the parameter related methods have parent word
+The methods in the parent class are only called by the child classes 
+Attributes: -
+    b,M,N,F  ->  Material specific vectors
+    G        ->  Residual type vector 
+    Ele      ->  Instance of Mesh class stores mesh related parameters passed by the FEA class
 
-#Here He_1 corresponds to the updated enthalpy from the NRS
-#And the He corresponds to the enthalpy at the previous time step not NRS scheme.
-
+Other Variables: - 
+    He_1 ->  corresponds to the current enthalpy from the NRS scheme
+    He   ->  corresponds to the enthalpy at the previous time step
+    
+Methods: -
+    get_parent_param -> generates the b,M,N vector/materices
+    Quad_Integ -> Performs the Gaussian Integration also tests if the Jacobi calculated is correct'''
+#############################################################################################################################
 class Material_model():
     def __init__(self,Mesh):
         self.b = 0
@@ -24,7 +45,6 @@ class Material_model():
         else:
             b = np.array([[0],
                           [0]])
-            
         M = np.matmul(self.Ele.phi,self.Ele.phi.reshape(1,2))
         N = np.matmul(self.Ele.dphi,self.Ele.dphi.reshape(1,2))
         return[b,M,N]
@@ -41,10 +61,25 @@ class Material_model():
                 self.b = b
             self.M = self.M + M
             self.N = self.N + N
-            check_J = check_J + self.Ele.J
+            check_J = check_J + self.Ele.J                                 #Testing Jacobi 
         if check_J != self.Ele.nl[ele_no+1] - self.Ele.nl[ele_no]:
             raise ValueError("Jacobi after Gauss summation is not equal to element length")
+'''
+#############################################################################################################################
+Child Class Amorphus_model: -
+Inherited by the Material_model
+Attributes: -
+    dG   ->  Tangent Stiffness type Matrix 
 
+Other Variables: - 
+    He_1 ->  corresponds to the current enthalpy from the NRS scheme
+    He   ->  corresponds to the enthalpy at the previous time step
+    
+Methods: -
+    get_param -> generates the G and dG vector/materix. It uses slope function which calculates dT/dH matrix to which 
+                 an 1 or 2 integer argument along with He_1 is passed. I use 1 to tell the slope library to use the 
+                 amorphous method to calculate the dT/dH matrix.'''
+#############################################################################################################################
 class Amorphus_model(Material_model):
     def __init__(self,Mesh):
         super().__init__(Mesh)
@@ -57,7 +92,22 @@ class Amorphus_model(Material_model):
         self.F = mm.D*(self.b-np.matmul(self.N,Te_1))
         self.G = np.matmul(self.M,(He_1-He)) - mm.delt*self.F
         self.dG = self.M + mm.delt*mm.D*np.matmul(self.N,slope.dT_dH)
+'''
+#############################################################################################################################
+Child Class Crystal_model: -
+Inherited by the Material_model
+Attributes: -
+    dG   ->  Tangent Stiffness type Matrix 
 
+Other Variables: - 
+    He_1 ->  corresponds to the current enthalpy from the NRS scheme
+    He   ->  corresponds to the enthalpy at the previous time step
+    
+Methods: -
+    get_param -> generates the G and dG vector/materix. It uses slope function which calculates dT/dH matrix to which 
+                 an 1 or 2 integer argument along with He_1 is passed. I use 2 to tell the slope library to use the 
+                 crystalline method to calculate the dT/dH matrix.'''
+#############################################################################################################################
 class Crystal_model(Material_model):
     def __init__(self,Mesh):
         super().__init__(Mesh)
