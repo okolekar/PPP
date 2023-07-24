@@ -1,12 +1,30 @@
-# Elemental Subroutine
+#Elemental Subroutine
+'''Topic: PPP
 
+#############################################################################################################################
+Importing the required libraries
+inputs -> Script where all the inputs are defined
+Material_Subroutine -> All material specific equations and parameters are processed here'''
+#############################################################################################################################
 import numpy as np
 import inputs
 from Material_Subroutine import Amorphus_model as Amor_routine
-
-#e_1 is the the is the subscript used for ***new NRS*** vector and 
-# e is used for the previous ***timestep*** vector 
-
+'''
+#############################################################################################################################
+Class Elemental_Subroutine
+g denotes global vector, e denotes element specific vector
+e_1 is the is the subscript used for current NRS vector and e is used for the previous timestep vector
+(As a note, here we don't need the values of the vector at previous NRS step)
+Attributes: -
+    A       ->      Stores the assembly matrix for the specific element
+    Gg      ->      The global G vector (Similar to the Residual Vector)
+    dGg     ->      The global dG vector (Similar to the Tangent Stiffness Matrix)
+Methods : -          
+update_Aly  ->      Builds the Assembly matrix based on the element number
+get_param   ->      This method extracts the element specific vectors and feeds it to the Material Subroutine.
+                    It expects element specific G and dG vector for all the elements, and formualtes the global G and dG 
+                    vectors to return it to the FEA Class.'''
+#############################################################################################################################
 class Elemental_Subroutine():
     def __init__(self):
         self.A = None
