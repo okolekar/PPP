@@ -51,10 +51,10 @@ nrs     ->     Newton Raphson Steps recorder (Breaks the NRS loop if steps are m
 t       ->     time
 E       ->     Instance of Elemental subroutine class
 Hk      ->     Enthalpy calculated in the previous time Step
-Hk+1    ->     Enthalpy calculated in the current Newton Raphson Step
+Hk_1    ->     Enthalpy calculated in the current Newton Raphson Step
 Ht      ->     Enthalpy in the previous NRS step, acts as a condition to break the NRS loop
 Tk      ->     Temperature calculated in the previous Newton Raphson Step
-Tk-1    ->     Temperature calculated in the current Newton Raphson Step
+Tk_1    ->     Temperature calculated in the current Newton Raphson Step
 The method works as follows: -
 1) Extraction of the latest temperature and enthalpy values from the global temperature Tg and enthalpy Hg vectors 
    respectively by Tk and Hk. Setting Hk_1 = Hk for the first NRS step
