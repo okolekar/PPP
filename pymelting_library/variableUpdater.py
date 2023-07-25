@@ -1,7 +1,7 @@
 '''Topic: PPP
-Library: - Mesh 
+Library: - Variable Updater
 #############################################################################################################################
-Importing the required standard libraries 
+Importing the required standard libraries   
 -----------------------------------------------------------------------------------------------------------------------------
 inputs -> Script where all the inputs are defined                                                                         '''
 #############################################################################################################################
@@ -9,119 +9,59 @@ import numpy as np
 import inputs as ip
 '''
 #############################################################################################################################
-Class Mesh: -
-=============================================================================================================================
-The attributes of this class store all the mesh related information
+Check arguments Decorator: -
 -----------------------------------------------------------------------------------------------------------------------------
-Attributes: -
--------------
-    nl      ->      Node list
-    phi     ->      The Linear shape function
-    dphi    ->      The derivative of Linear shape function
-    J       ->      The Jacobian
------------------------------------------------------------------------------------------------------------------------------
-Methods : -
-=============================================================================================================================
-test_phi        ->      Tests if the shape function was correctly formed formulated
-test_dphi       ->      Tests if the derivative of the shape function was correctly formed formulated
-mesh_list       ->      This method provides the node number and corresponding z co-ordinate value
-update_phi      ->      Updates the Shape function as per the gauss points
-update_Jacobi   ->      Updates the Jacobi as per the element number
-update_dphi     ->      Updates the derivative of the shape function as per the element number.
-update_element  ->      Runs update_Jacobi and update_dphi with a condition that the element number is non negative.
+Checks if atleast 1 argument is passed to this Class                                                                         
 #############################################################################################################################
 '''
-class Mesh():
-    def __init__(self):
-        self.nl = self.mesh_list()
-        self.phi = None
-        self.dphi = None
-        self.J = None
-    '''
-#############################################################################################################################
-Method test_phi(): -
-=============================================================================================================================
-The following tests were performed: -
-1) Interpolation Properity: - checks whether the value of the Shape function at it's node is 1 and at other node 0.
-2) Partition of unity property: - Checks if the sum of all the shape functions is 1 for any value passed'''
-#############################################################################################################################
-    def test_phi(self,zeta):
-        if zeta <=1 and zeta >= -1:
-            
-            self.update_phi(zeta)
-            # Check Interpolation property
-            if self.phi.any() > 1 or self.phi.any() < 0:
-                raise ValueError(f"Incorrect Shape function value exceeds 1 or is negative {self.phi}")
-            elif zeta == 1 and (self.phi[0] != 0 or self.phi[1] != 1):
-                raise ValueError(f"Incorrect Shape function for the given zeta {self.phi}")
-            elif zeta == -1 and (self.phi[0] != 1 or self.phi[1] != 0):
-                raise ValueError(f"Incorrect Shape function for the given zeta {self.phi}")
-            #Check partition of unity property
-            if self.phi.sum()!=1:
-                raise ValueError(f"Incorrect Shape function for the given zeta {self.phi}")
-            if self.dphi.sum() != 0:
-                raise ValueError(f"Incorrect derivative of Shape function")
-            else:
-                print("Following tests were performed on Shape function")
-                print("1) Interpolation property check,")
-                print("2) Partition of unity property check,")
-                print("Shape function passed all the tests")
-        else: 
-            raise ValueError("Value of zeta should be within [-1,1] and i should be int")
-        '''
-#############################################################################################################################
-Method test_dphi(): -
-=============================================================================================================================
-Checks if the sum of the derivative of the shape function at the constant open coefficient is zero'''
-#############################################################################################################################
-    def test_dphi(self,T):
-        self.update_dphi()
-        ans = np.matmul(self.dphi.reshape(1,2),T.reshape(2,1))
-        if ans != 0:
-            print("test_dphi failed")
-            print("Ensure that the temperature field was constant at both nodes")
-            raise ValueError(f"Shape function evaluated to be {ans}")
-        else:
-            print("dphi passed the test.")
-            '''
-#############################################################################################################################
-Method mesh_list(): -
-=============================================================================================================================
-1) Generates the mesh list 
-2) Checks if the mesh list was properly created by ensuring that last entry of the mesh list is equal to the total length'''
-#############################################################################################################################
-    def mesh_list(self):
-        l = []
-        for q in range(ip.n):
-            l.append(q*ip.length/(ip.n-1))
-        if l[-1] != ip.length or len(l) == 0:
-            print("The mesh list is not generated correctly")           
-        return l
+def check_arguments(func,*args,**kwargs):
+    def wrapper(*args,**kwargs):
+        if func.__name__ == 'Update_Crys' and len(kwargs) > 2:
+            raise ValueError("Incorrect number of input arguments to Update_Crys.")
 
-    def update_phi(self,zeta):
-        if zeta <=1 and zeta >= -1:
-            self.phi=np.array([0.5*(1-zeta),0.5*(1+zeta)]).reshape(2,1) # The shape function is Linear.
-        else: 
-            raise ValueError("Value of zeta should be within [-1,1]")
-    '''
+        elif func.__name__ == 'Update_amorphus' and (len(kwargs) > 3):
+            raise ValueError("Incorrect number of input arguments to Update_amorphus.")
+        return func(*args,**kwargs)
+    return wrapper
+'''
 #############################################################################################################################
-Method update_Jacobi(): -
+Function Update_Crys: -
 =============================================================================================================================
-1) Updates the  Jacobi
-2) Checks if the determinant of the Jacobi is positive and non zero'''
+Based on the inputs, if Temperature is provided then Enthalpy is updated based on the Temperature, as follows: -
+-----------------------------------------------------------------------------------------------------------------------------
+If T < 0 --> H = D * T                  -> The material is still solid 
+If T = 0 --> H = 0                      -> The material just melted
+If T > 0 --> H = D * T + D * lambda     -> The material is completed melted
+and vice versa if Enthalpy is provided.
 #############################################################################################################################
-    def update_Jacobi(self,i):
-        x1 = self.nl[i]
-        x2 = self.nl[i+1]
-        self.J = 0.5*(x2-x1)
-        if self.J < 0 or self.J == 0:
-            raise ValueError("The determinant of Jacobi is negative")
-        
-    def update_dphi(self): # The shape function's first and second order partial deravatives.
-        self.dphi = (self.J**-1)*np.array([-0.5,0.5]).reshape(2,1)
-    
-    def update_element(self,i):
-        if  i<0 or type(i) != int:
-            raise ValueError("Incorrect element number")
-        self.update_Jacobi(i)
-        self.update_dphi()
+'''
+@check_arguments
+def Update_Crys(T=None,H=None):
+    if T is not None:
+        return np.where(T < 0, ip.D*T, np.where(T == 0,ip.D*ip.lambf, ip.D*T+ip.D*ip.lambf))
+    elif H is not None:
+        return np.where(H < 0, H/ip.D, np.where(H <= ip.lambf*ip.D,0, (H-ip.D*ip.lambf)/ip.D))
+    else:
+        print("Update_Crys() failed to execute")
+        raise ValueError("Enthalpy and/or Temperature not provided. Hence, terminating further execution")
+'''
+#############################################################################################################################
+Function Update_amorphus: -
+=============================================================================================================================
+Based on the inputs, if Temperature is provided then Enthalpy is updated based on the Temperature, as follows: -
+-----------------------------------------------------------------------------------------------------------------------------
+If T < 0 --> H = D * T                          -> The material is still solid 
+If T = 0 --> H = D * T + D * lambda * T/Tliq    -> The material just melted
+If T > 0 --> H = D * T + D * lambda             -> The material is completed melted
+and vice versa if Enthalpy is provided.
+#############################################################################################################################
+'''   
+@check_arguments
+def Update_amorphus(T=None,H=None,Hliq=None):
+    if T is not None:
+        return np.where(T <= 0, ip.D*T, np.where(np.logical_and(T >= 0, T <= ip.Tliq),ip.D*ip.lambf*T/ip.Tliq, ip.D*T+ip.D*ip.lambf))
+    elif H is not None:
+        return np.where(H <= 0, H/ip.D, np.where(H <= Hliq,H*ip.Tliq/(ip.D*ip.Tliq+ip.D*ip.lambf), (H-ip.D*ip.lambf)/ip.D))
+    else:
+        print("Update_amorphus() failed to execute")
+        raise ValueError("Enthalpy and/or Temperature not provided. Hence, terminating further execution")
