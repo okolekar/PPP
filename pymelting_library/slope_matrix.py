@@ -1,71 +1,127 @@
 '''Topic: PPP
-
+Library: - Mesh 
 #############################################################################################################################
-Importing the required standard libraries   
+Importing the required standard libraries 
+-----------------------------------------------------------------------------------------------------------------------------
 inputs -> Script where all the inputs are defined                                                                         '''
 #############################################################################################################################
 import numpy as np
 import inputs as ip
 '''
 #############################################################################################################################
-Check arguments Decorator: -
-Checks if exactly 2 argument are passed to this Class                                                                     '''
-#############################################################################################################################
-def check_arguments(func):
-    def wrapper(self, *args,**kwargs):
-        if len(args) == 2:
-            return func(self,*args,**kwargs)
-        else:
-            raise ValueError(f"{len(args)} are incorrect number of input arguments")
-    return wrapper
-'''
-#############################################################################################################################
-Class temp_der
-This class has only one job to calculate dT/dH matrix
+Class Mesh: -
+=============================================================================================================================
+The attributes of this class store all the mesh related information
+-----------------------------------------------------------------------------------------------------------------------------
 Attributes: -
-    dT_dH  ->  Slope matrix
-    
-Methods: -
-    verify      -> Checks if the slope matrix was created correctly by checking the off diagonal elements to be zero 
-    Amorph_slop -> Calculates the slope matrix for the amorphous materials
-    Cryst_slop  -> Calculates the slope matrix for the crystalline materials                                              '''
+-------------
+    nl      ->      Node list
+    phi     ->      The Linear shape function
+    dphi    ->      The derivative of Linear shape function
+    J       ->      The Jacobian
+-----------------------------------------------------------------------------------------------------------------------------
+Methods : -
+=============================================================================================================================
+test_phi        ->      Tests if the shape function was correctly formed formulated
+test_dphi       ->      Tests if the derivative of the shape function was correctly formed formulated
+mesh_list       ->      This method provides the node number and corresponding z co-ordinate value
+update_phi      ->      Updates the Shape function as per the gauss points
+update_Jacobi   ->      Updates the Jacobi as per the element number
+update_dphi     ->      Updates the derivative of the shape function as per the element number.
+update_element  ->      Runs update_Jacobi and update_dphi with a condition that the element number is non negative.
 #############################################################################################################################
-class temp_der():
-    @check_arguments
-    def __init__(self,*args):
-        
-        self.dT_dH = np.zeros([1,1])
-
-        if args[0] == 1:
-            Hk_1 = args[1]
-            self.Amorph_slop(Hk_1)
-
-        if args[0] == 2:
-            Hk_1 = args[1]
-            self.Cryst_slop(Hk_1)
- 
-    def verify(self):
-        if self.dT_dH[0][1] != 0 or self.dT_dH[1][0] != 0:
-            raise ValueError("The 2*2 dT/dH Matrix is not constructed correctly")
-
-    def Amorph_slop(self, Hk_1):
-        try:
-            self.dT_dH = [[1/ip.D if Hk_1[0] <= 0 else ip.Tliq/(ip.D*ip.Tliq + ip.D*ip.lambf) if np.logical_and(0 <= Hk_1[0], Hk_1[0] <= ip.Hliq) else 1/ip.D, 0],
-                          [0,1/ip.D if Hk_1[1] <= 0 else ip.Tliq/(ip.D*ip.Tliq + ip.D*ip.lambf) if np.logical_and(0 <= Hk_1[1], Hk_1[1] <= ip.Hliq) else 1/ip.D]]
-            self.verify()
-
-        except ValueError as e:
-            print(f"An error in dT_dH: {str(e)} following were the inputs")
-            print(f"Hk+1 = {Hk_1}")
-            raise ValueError("Check the variables passed")   
-  
-    def Cryst_slop(self, Hk_1):
-        try:
-            self.dT_dH = [[1/ip.D if Hk_1[0] < 0 else 0 if Hk_1[0] == 0 else 1/ip.D, 0],
-                        [0,1/ip.D if Hk_1[1] < 0 else 0 if Hk_1[1] == 0 else 1/ip.D]]
-            self.verify()
+'''
+class Mesh():
+    def __init__(self):
+        self.nl = self.mesh_list()
+        self.phi = None
+        self.dphi = None
+        self.J = None
+    '''
+#############################################################################################################################
+Method test_phi(): -
+=============================================================================================================================
+The following tests were performed: -
+1) Interpolation Properity: - checks whether the value of the Shape function at it's node is 1 and at other node 0.
+2) Partition of unity property: - Checks if the sum of all the shape functions is 1 for any value passed'''
+#############################################################################################################################
+    def test_phi(self,zeta):
+        if zeta <=1 and zeta >= -1:
             
-        except ValueError as e:
-            print(f"An error in dT_dH: {str(e)} following were the inputs")
-            print(f"Hk+1 = {Hk_1}")
-            raise ValueError("Check the variables passed")
+            self.update_phi(zeta)
+            # Check Interpolation property
+            if self.phi.any() > 1 or self.phi.any() < 0:
+                raise ValueError(f"Incorrect Shape function value exceeds 1 or is negative {self.phi}")
+            elif zeta == 1 and (self.phi[0] != 0 or self.phi[1] != 1):
+                raise ValueError(f"Incorrect Shape function for the given zeta {self.phi}")
+            elif zeta == -1 and (self.phi[0] != 1 or self.phi[1] != 0):
+                raise ValueError(f"Incorrect Shape function for the given zeta {self.phi}")
+            #Check partition of unity property
+            if self.phi.sum()!=1:
+                raise ValueError(f"Incorrect Shape function for the given zeta {self.phi}")
+            if self.dphi.sum() != 0:
+                raise ValueError(f"Incorrect derivative of Shape function")
+            else:
+                print("Following tests were performed on Shape function")
+                print("1) Interpolation property check,")
+                print("2) Partition of unity property check,")
+                print("Shape function passed all the tests")
+        else: 
+            raise ValueError("Value of zeta should be within [-1,1] and i should be int")
+        '''
+#############################################################################################################################
+Method test_dphi(): -
+=============================================================================================================================
+Checks if the sum of the derivative of the shape function at the constant open coefficient is zero'''
+#############################################################################################################################
+    def test_dphi(self,T):
+        self.update_dphi()
+        ans = np.matmul(self.dphi.reshape(1,2),T.reshape(2,1))
+        if ans != 0:
+            print("test_dphi failed")
+            print("Ensure that the temperature field was constant at both nodes")
+            raise ValueError(f"Shape function evaluated to be {ans}")
+        else:
+            print("dphi passed the test.")
+            '''
+#############################################################################################################################
+Method mesh_list(): -
+=============================================================================================================================
+1) Generates the mesh list 
+2) Checks if the mesh list was properly created by ensuring that last entry of the mesh list is equal to the total length'''
+#############################################################################################################################
+    def mesh_list(self):
+        l = []
+        for q in range(ip.n):
+            l.append(q*ip.length/(ip.n-1))
+        if l[-1] != ip.length or len(l) == 0:
+            print("The mesh list is not generated correctly")           
+        return l
+
+    def update_phi(self,zeta):
+        if zeta <=1 and zeta >= -1:
+            self.phi=np.array([0.5*(1-zeta),0.5*(1+zeta)]).reshape(2,1) # The shape function is Linear.
+        else: 
+            raise ValueError("Value of zeta should be within [-1,1]")
+    '''
+#############################################################################################################################
+Method update_Jacobi(): -
+=============================================================================================================================
+1) Updates the  Jacobi
+2) Checks if the determinant of the Jacobi is positive and non zero'''
+#############################################################################################################################
+    def update_Jacobi(self,i):
+        x1 = self.nl[i]
+        x2 = self.nl[i+1]
+        self.J = 0.5*(x2-x1)
+        if self.J < 0 or self.J == 0:
+            raise ValueError("The determinant of Jacobi is negative")
+        
+    def update_dphi(self): # The shape function's first and second order partial deravatives.
+        self.dphi = (self.J**-1)*np.array([-0.5,0.5]).reshape(2,1)
+    
+    def update_element(self,i):
+        if  i<0 or type(i) != int:
+            raise ValueError("Incorrect element number")
+        self.update_Jacobi(i)
+        self.update_dphi()
