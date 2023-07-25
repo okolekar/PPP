@@ -1,7 +1,8 @@
 '''Topic: PPP
-
+Library: - Material Subroutine
 #############################################################################################################################
-Importing the required libraries
+Importing the required libraries : -
+-----------------------------------------------------------------------------------------------------------------------------
 inputs -> Script where all the inputs are defined
 slope_matrix -> Calculates the dT/dH matrix'''
 #############################################################################################################################
@@ -10,19 +11,24 @@ from slope_matrix import temp_der as dT
 import inputs as mm
 '''
 #############################################################################################################################
-Class Material_model
+Class Material_model: -
+=============================================================================================================================
 This is a parent class and hence the parameter related methods have parent word
 The methods in the parent class are only called by the child classes 
+-----------------------------------------------------------------------------------------------------------------------------
 Attributes: -
+-------------
     b,M,N,F  ->  Material specific vectors
     G        ->  Residual type vector 
     Ele      ->  Instance of Mesh class stores mesh related parameters passed by the FEA class
-
-Other Variables: - 
+-----------------------------------------------------------------------------------------------------------------------------
+Other Variables: -
+------------------
     He_1 ->  corresponds to the current enthalpy from the NRS scheme
     He   ->  corresponds to the enthalpy at the previous time step
-    
+-----------------------------------------------------------------------------------------------------------------------------
 Methods: -
+=============================================================================================================================
     get_parent_param -> generates the b,M,N vector/materices
     Quad_Integ -> Performs the Gaussian Integration also tests if the Jacobi calculated is correct'''
 #############################################################################################################################
@@ -67,15 +73,20 @@ class Material_model():
 '''
 #############################################################################################################################
 Child Class Amorphus_model: -
+=============================================================================================================================
 Inherited by the Material_model
+-----------------------------------------------------------------------------------------------------------------------------
 Attributes: -
+-------------
     dG   ->  Tangent Stiffness type Matrix 
-
+-----------------------------------------------------------------------------------------------------------------------------
 Other Variables: - 
+------------------
     He_1 ->  corresponds to the current enthalpy from the NRS scheme
     He   ->  corresponds to the enthalpy at the previous time step
-    
+-----------------------------------------------------------------------------------------------------------------------------
 Methods: -
+=============================================================================================================================
     get_param -> generates the G and dG vector/materix. It uses slope function which calculates dT/dH matrix to which 
                  an 1 or 2 integer argument along with He_1 is passed. I use 1 to tell the slope library to use the 
                  amorphous method to calculate the dT/dH matrix.'''
@@ -95,15 +106,19 @@ class Amorphus_model(Material_model):
 '''
 #############################################################################################################################
 Child Class Crystal_model: -
+=============================================================================================================================
 Inherited by the Material_model
+-----------------------------------------------------------------------------------------------------------------------------
 Attributes: -
+-------------
     dG   ->  Tangent Stiffness type Matrix 
-
+-----------------------------------------------------------------------------------------------------------------------------
 Other Variables: - 
     He_1 ->  corresponds to the current enthalpy from the NRS scheme
     He   ->  corresponds to the enthalpy at the previous time step
-    
+-----------------------------------------------------------------------------------------------------------------------------
 Methods: -
+=============================================================================================================================
     get_param -> generates the G and dG vector/materix. It uses slope function which calculates dT/dH matrix to which 
                  an 1 or 2 integer argument along with He_1 is passed. I use 2 to tell the slope library to use the 
                  crystalline method to calculate the dT/dH matrix.'''
