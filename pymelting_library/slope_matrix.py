@@ -1,6 +1,16 @@
+'''Topic: PPP
+
+#############################################################################################################################
+Importing the required standard libraries   
+inputs -> Script where all the inputs are defined                                                                         '''
+#############################################################################################################################
 import numpy as np
 import inputs as ip
-
+'''
+#############################################################################################################################
+Check arguments Decorator: -
+Checks if exactly 2 argument are passed to this Class                                                                     '''
+#############################################################################################################################
 def check_arguments(func):
     def wrapper(self, *args,**kwargs):
         if len(args) == 2:
@@ -8,7 +18,18 @@ def check_arguments(func):
         else:
             raise ValueError(f"{len(args)} are incorrect number of input arguments")
     return wrapper
-
+'''
+#############################################################################################################################
+Class temp_der
+This class has only one job to calculate dT/dH matrix
+Attributes: -
+    dT_dH  ->  Slope matrix
+    
+Methods: -
+    verify      -> Checks if the slope matrix was created correctly by checking the off diagonal elements to be zero 
+    Amorph_slop -> Calculates the slope matrix for the amorphous materials
+    Cryst_slop  -> Calculates the slope matrix for the crystalline materials                                              '''
+#############################################################################################################################
 class temp_der():
     @check_arguments
     def __init__(self,*args):
@@ -22,9 +43,7 @@ class temp_der():
         if args[0] == 2:
             Hk_1 = args[1]
             self.Cryst_slop(Hk_1)
-
-
-        
+ 
     def verify(self):
         if self.dT_dH[0][1] != 0 or self.dT_dH[1][0] != 0:
             raise ValueError("The 2*2 dT/dH Matrix is not constructed correctly")
