@@ -3,11 +3,12 @@ Library Initial_Temperature_Dist
 #############################################################################################################################
 Importing the required standard libraries 
 -----------------------------------------------------------------------------------------------------------------------------
-inputs -> Script where all the inputs are defined                                                                         '''
+Processed_Inputs -> Script where all the inputs are defined
 #############################################################################################################################
+'''
 import numpy as np
 import math as m
-import inputs as ip 
+import Processed_Inputs as ip 
 '''
 #############################################################################################################################
 Check arguments Decorator: -
@@ -29,7 +30,9 @@ As soon as the init method is called the method calculating the Temperature Dist
 Attributes:-
 ------------
 T                -> Stores the Initial Temperature distribution
+-----------------------------------------------------------------------------------------------------------------------------
 Tests: -
+=============================================================================================================================
 check_T          -> Checks if the first entry in the Temperature is greater than the ambient Temperature.
 -----------------------------------------------------------------------------------------------------------------------------
 Methods: - 
@@ -52,11 +55,10 @@ class Initial_Temp():
 #############################################################################################################################
 Method Tdist_Enthalpy()
 -----------------------------------------------------------------------------------------------------------------------------
-This method has the try and except as for the Test Heat Transfer Test Case, I have to set ambient Temperature to 0 as the 
-analytical solution was built on this condition. When the Ta is set 0, the tmelt becomes 0 which is in the denominator and 
-hence we have ZeroDivisionError. This is handled by changing the formula in the except. The time in the denominator is 
-changed to delt                                                                                                           '''
+This method has the try and except as for the Test Heat Transfer Test Case, to capture any valueErrors that may arrise 
+during the simualtion                                                                                                       
 #############################################################################################################################
+'''
     def Tdist_Enthalpy(self,list):
         F = ip.ratioI
         try:
@@ -69,8 +71,6 @@ changed to delt                                                                 
                                     -list[i]*m.erfc(list[i]/(2*np.sqrt(ip.t_start))))
                                  + ip.Ta)
         except ZeroDivisionError:
-            print("The Ta may be set to zero: Initial Temperature calculation changed the formula")
-            print("t_start set to delt for this iteration")
             for i in range(len(self.T)):
                 if i == len(self.T)-1:
                     self.T[i] = ip.Ta #This takes care of the boundary condition
