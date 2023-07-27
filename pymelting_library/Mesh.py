@@ -3,10 +3,11 @@ Library: - Mesh
 #############################################################################################################################
 Importing the required standard libraries 
 -----------------------------------------------------------------------------------------------------------------------------
-inputs -> Script where all the inputs are defined                                                                         '''
+Processed_Inputs -> Script where all the inputs are defined                                                                  
 #############################################################################################################################
+'''
 import numpy as np
-import inputs as ip
+import Processed_Inputs as ip
 '''
 #############################################################################################################################
 Class Mesh: -
@@ -15,10 +16,11 @@ The attributes of this class store all the mesh related information
 -----------------------------------------------------------------------------------------------------------------------------
 Attributes: -
 -------------
-    nl      ->      Node list
-    phi     ->      The Linear shape function
-    dphi    ->      The derivative of Linear shape function
-    J       ->      The Jacobian
+    nl          ->      Node list
+    phi         ->      The Linear shape function
+    dphi        ->      The derivative of Linear shape function
+    J           ->      The Jacobian
+    runcount    ->      Checks if the method was already called before
 -----------------------------------------------------------------------------------------------------------------------------
 Methods : -
 =============================================================================================================================
@@ -37,6 +39,7 @@ class Mesh():
         self.phi = None
         self.dphi = None
         self.J = None
+        self.run_count = 0
     '''
 #############################################################################################################################
 Method test_phi(): -
@@ -47,11 +50,9 @@ The following tests were performed: -
 #############################################################################################################################
     def test_phi(self,zeta):
         if zeta <=1 and zeta >= -1:
-            
-            self.update_phi(zeta)
             # Check Interpolation property
             if self.phi.any() > 1 or self.phi.any() < 0:
-                raise ValueError(f"Incorrect Shape function value exceeds 1 or is negative {self.phi}")
+                raise ValueError(f"Incorrect Shape function, value exceeds 1 or is negative {self.phi}")
             elif zeta == 1 and (self.phi[0] != 0 or self.phi[1] != 1):
                 raise ValueError(f"Incorrect Shape function for the given zeta {self.phi}")
             elif zeta == -1 and (self.phi[0] != 1 or self.phi[1] != 0):
@@ -59,13 +60,13 @@ The following tests were performed: -
             #Check partition of unity property
             if self.phi.sum()!=1:
                 raise ValueError(f"Incorrect Shape function for the given zeta {self.phi}")
-            if self.dphi.sum() != 0:
-                raise ValueError(f"Incorrect derivative of Shape function")
             else:
-                print("Following tests were performed on Shape function")
+                print("And following tests were performed on Shape function")
                 print("1) Interpolation property check,")
                 print("2) Partition of unity property check,")
                 print("Shape function passed all the tests")
+                print("\n")
+                self.run_count += 1
         else: 
             raise ValueError("Value of zeta should be within [-1,1] and i should be int")
         '''
@@ -74,15 +75,15 @@ Method test_dphi(): -
 =============================================================================================================================
 Checks if the sum of the derivative of the shape function at the constant open coefficient is zero'''
 #############################################################################################################################
-    def test_dphi(self,T):
-        self.update_dphi()
-        ans = np.matmul(self.dphi.reshape(1,2),T.reshape(2,1))
+    def test_dphi(self):
+        ans = np.sum(self.dphi)
         if ans != 0:
             print("test_dphi failed")
             print("Ensure that the temperature field was constant at both nodes")
             raise ValueError(f"Shape function evaluated to be {ans}")
         else:
-            print("dphi passed the test.")
+            print("\nIn the Mesh module")
+            print("The derivative of Shape function passed the test.")
             '''
 #############################################################################################################################
 Method mesh_list(): -
@@ -95,14 +96,16 @@ Method mesh_list(): -
         for q in range(ip.n):
             l.append(q*ip.length/(ip.n-1))
         if l[-1] != ip.length or len(l) == 0:
-            print("The mesh list is not generated correctly")           
+            print("\nError in Mesh module, the mesh list is not generated correctly")           
         return l
 
     def update_phi(self,zeta):
         if zeta <=1 and zeta >= -1:
             self.phi=np.array([0.5*(1-zeta),0.5*(1+zeta)]).reshape(2,1) # The shape function is Linear.
         else: 
-            raise ValueError("Value of zeta should be within [-1,1]")
+            raise ValueError("\nError in Mesh module, value of zeta should be within [-1,1]")
+        if self.run_count < 1:
+            self.test_phi(zeta)
     '''
 #############################################################################################################################
 Method update_Jacobi(): -
@@ -114,14 +117,16 @@ Method update_Jacobi(): -
         x1 = self.nl[i]
         x2 = self.nl[i+1]
         self.J = 0.5*(x2-x1)
-        if self.J < 0 or self.J == 0:
-            raise ValueError("The determinant of Jacobi is negative")
+        if self.J <= 0 or self.J == 0:
+            raise ValueError("\nError in Mesh module,the determinant of Jacobi is negative or zero")
         
     def update_dphi(self): # The shape function's first and second order partial deravatives.
         self.dphi = (self.J**-1)*np.array([-0.5,0.5]).reshape(2,1)
+        if self.run_count < 1:
+            self.test_dphi()
     
     def update_element(self,i):
         if  i<0 or type(i) != int:
-            raise ValueError("Incorrect element number")
+            raise ValueError("\nError in Mesh module, Incorrect element number")
         self.update_Jacobi(i)
         self.update_dphi()
