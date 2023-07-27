@@ -3,24 +3,27 @@
 #############################################################################################################################
 Importing the required libraries and their functions: -
 =============================================================================================================================
-inputs: ->                        Script where all the inputs are defined
+Processed_Inputs: ->              Script where all the inputs are defined
 postProcessor: ->                 Graphs and visualization library, 
 Heat_Transfer_verification: ->    Provides an analytical solution to verify the application Heat transfer
 Initial_Temperature_Dist: ->      Provides the Initial Temperature Distribution 
 variableUpdater: ->               Updates the Temperature and the Enthalpy 
 Elemental_Subroutine: ->          Extracts the Temperatures and Enthalpy form the Global vector for each element
-Mesh: ->                          Generates the Mesh specific parameters 
-Check_Inputs: ->                  Decorator that performs the check to ensure the parameters are physical'''
+Mesh: ->                          Generates the Mesh specific parameters '''
 #############################################################################################################################
 import numpy as np
-import inputs as ip
+import Processed_Inputs as ip
 import postProcessor as pp
 from Heat_Transfer_verification import Verification as HTv
 from Initial_Temperature_Dist import Initial_Temp as IT
-from variableUpdater import  Update_amorphus as update
 from Elemental_Subroutine import Elemental_Subroutine
 from Mesh import Mesh
-from Check_Inputs import check_inputs
+if ip.mat_type == 1:
+    from variableUpdater import  Update_Crys as update
+elif ip.mat_type ==2:
+    from variableUpdater import  Update_amorphus as update
+else:
+    raise ValueError('Incorrect input value for the mateial type')
 
 np.set_printoptions(edgeitems=11, threshold=np.inf, linewidth=np.inf, suppress=True, formatter={'int': lambda x: str(x)})
 '''
@@ -39,11 +42,10 @@ Attributes: -
    the admissible range.'''
 #############################################################################################################################
 class FEA():
-    @check_inputs
     def __init__(self):
         self.Mesh = Mesh()
         self.Tg = IT(self.Mesh.nl).T                    #The dot T shows that I access the Temperature variable. #it was 0.51
-        self.Hg = update(T = self.Tg,H=None,Hliq=None)  #subscript g shows its a global vector
+        self.Hg = update(T = self.Tg,H=None,run = 0)            #subscript g shows its a global vector                               
     '''
 #############################################################################################################################
 Method solve(): -
@@ -68,7 +70,7 @@ The method works as follows: -
 #############################################################################################################################   
     def solve(self):
         E = Elemental_Subroutine()
-        for t in range(1):
+        for t in range(5):
             nrs = 0
             Hk = self.Hg[:,t][:,np.newaxis].copy()
             Hk_1 = Hk.copy()
@@ -88,7 +90,7 @@ The method works as follows: -
                 E.dGg[:,ip.n-1] = 0
                 E.dGg[ip.n-1,ip.n-1] = 1
                 Hk_1 = Hk_1 - np.matmul(np.linalg.inv(E.dGg),E.Gg) 
-                Tk_1 = update(H = Hk_1,Hliq=ip.Hliq,T=None)
+                Tk_1 = update(H = Hk_1,T=None,run = t)
                 nrs = nrs + 1
                 if(np.all(np.abs(Ht-Hk_1)<np.exp(-5))):
                     print(f"NRS converged at {nrs} step")
@@ -101,10 +103,10 @@ The method works as follows: -
 EntlpyApp = FEA()
 EntlpyApp.solve()
 
-Tverify = HTv(EntlpyApp.Tg[:,0],ip.n,EntlpyApp.Mesh.nl,ip.alpha).T_analytical
+#Tverify = HTv(EntlpyApp.Tg[:,0],ip.n,EntlpyApp.Mesh.nl,ip.alpha).T_analytical
 #print(EntlpyApp.Tg)
 #print(EntlpyApp.Hg)
-#pp.plotTemprature(EntlpyApp.Tg[:,0],EntlpyApp.Tg[:,-1],1)
+pp.plotTemprature(EntlpyApp.Tg[:,0],EntlpyApp.Tg[:,-1],1)
 #pp.Simultaneous_Plotter(EntlpyApp.Tg,'Temperature',EntlpyApp.Hg,'Enthalpy')
-pp.plotVerify(EntlpyApp.Tg[:,0],'Initial_Temperature',EntlpyApp.Tg[:,-1],
-              'Final Temperature from the numerical scheme',Tverify,'Analytical Temperature')
+'''pp.plotVerify(EntlpyApp.Tg[:,0],'Initial_Temperature',EntlpyApp.Tg[:,-1],
+              'Final Temperature from the numerical scheme',Tverify,'Analytical Temperature')'''
