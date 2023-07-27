@@ -3,12 +3,12 @@ Library: - Material Subroutine
 #############################################################################################################################
 Importing the required libraries : -
 -----------------------------------------------------------------------------------------------------------------------------
-inputs -> Script where all the inputs are defined
+Processed_Inputs -> Script where all the inputs are defined
 slope_matrix -> Calculates the dT/dH matrix'''
 #############################################################################################################################
 import numpy as np
 from slope_matrix import temp_der as dT
-import inputs as mm
+import Processed_Inputs as mm
 '''
 #############################################################################################################################
 Class Material_model: -
@@ -18,9 +18,10 @@ The methods in the parent class are only called by the child classes
 -----------------------------------------------------------------------------------------------------------------------------
 Attributes: -
 -------------
-    b,M,N,F  ->  Material specific vectors
-    G        ->  Residual type vector 
-    Ele      ->  Instance of Mesh class stores mesh related parameters passed by the FEA class
+    b,M,N,F     ->  Material specific vectors
+    G           ->  Residual type vector 
+    Ele         ->  Instance of Mesh class stores mesh related parameters passed by the FEA class
+    runcount    ->  Checks if the method was already called before
 -----------------------------------------------------------------------------------------------------------------------------
 Other Variables: -
 ------------------
@@ -33,13 +34,14 @@ Methods: -
     Quad_Integ -> Performs the Gaussian Integration also tests if the Jacobi calculated is correct'''
 #############################################################################################################################
 class Material_model():
-    def __init__(self,Mesh):
+    def __init__(self,Mesh,runcount):
         self.b = 0
         self.M = 0
         self.N = 0
         self.F = 0
         self.G = 0
         self.Ele = Mesh
+        self.runcount = runcount
 
     def get_parent_param(self,boundry_node):
         
@@ -88,18 +90,22 @@ Other Variables: -
 Methods: -
 =============================================================================================================================
     get_param -> generates the G and dG vector/materix. It uses slope function which calculates dT/dH matrix to which 
-                 an 1 or 2 integer argument along with He_1 is passed. I use 1 to tell the slope library to use the 
+                 an 1 or 2 integer argument along with He_1 is passed. I use 2 to tell the slope library to use the 
                  amorphous method to calculate the dT/dH matrix.'''
 #############################################################################################################################
 class Amorphus_model(Material_model):
-    def __init__(self,Mesh):
-        super().__init__(Mesh)
+    def __init__(self,Mesh,runcount):
+        super().__init__(Mesh,runcount)
+        if self.runcount<1:
+            print('Amorphous routine activated in Material subroutine')
+            self.runcount +=1
         self.dG = None
 
     def get_param(self,He_1,Te_1,He,ele_no):
         self.Ele.update_element(ele_no)
         self.Quad_Integ(ele_no)
-        slope = dT(1,He_1)
+        slope = dT(mm.mat_type,He_1,self.runcount)
+        self.runcount +=1
         self.F = mm.D*(self.b-np.matmul(self.N,Te_1))
         self.G = np.matmul(self.M,(He_1-He)) - mm.delt*self.F
         self.dG = self.M + mm.delt*mm.D*np.matmul(self.N,slope.dT_dH)
@@ -120,18 +126,22 @@ Other Variables: -
 Methods: -
 =============================================================================================================================
     get_param -> generates the G and dG vector/materix. It uses slope function which calculates dT/dH matrix to which 
-                 an 1 or 2 integer argument along with He_1 is passed. I use 2 to tell the slope library to use the 
+                 an 1 or 2 integer argument along with He_1 is passed. I use 1 to tell the slope library to use the 
                  crystalline method to calculate the dT/dH matrix.'''
 #############################################################################################################################
 class Crystal_model(Material_model):
-    def __init__(self,Mesh):
-        super().__init__(Mesh)
+    def __init__(self,Mesh,runcount):
+        super().__init__(Mesh,runcount)
+        if self.runcount<1:
+            print('Crystalline routine activated in Material subroutine')
+            self.runcount +=1
         self.dG = None
 
     def get_param(self,He_1,Te_1,He,ele_no):
         self.Ele.update_element(ele_no)
         self.Quad_Integ(ele_no)
-        slope = dT.Cryst_slop(2,He_1)
+        slope = dT(mm.mat_type,He_1,self.runcount)
+        self.runcount +=1
         self.F = mm.D*(self.b-np.matmul(self.N,Te_1))
         self.G = np.matmul(self.M,(He_1-He)) - mm.delt*self.F
         self.dG = self.M + mm.delt*mm.D*np.matmul(self.N,slope.dT_dH)
