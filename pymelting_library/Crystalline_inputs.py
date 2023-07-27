@@ -1,4 +1,5 @@
-# Crystalline_Material_Constant
+# Crystalline_Material_Constants
+# Default Material:- Aluminium
 meltpt = 9.3*10**2              #Melting Point                        # Kelvin
 vapourpt  = 2.5*10**3           #Vapour Point                         # Kelvin
 Iref = 1.5*10**10               #Reference Intensity                  # W/m^2
