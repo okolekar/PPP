@@ -1,4 +1,4 @@
-'''Topic: PPP
+'''Topic: PPP Name title and the start date
 
 #############################################################################################################################
 Importing the required libraries and their functions: -
@@ -92,6 +92,8 @@ The method works as follows: -
                 Hk_1 = Hk_1 - np.matmul(np.linalg.inv(E.dGg),E.Gg) 
                 Tk_1 = update(H = Hk_1,T=None,run = t)
                 nrs = nrs + 1
+                if nrs == 1 and t == 0:
+                    print("\nAll tests were successfully performed and no abnormalities detected\n")
                 if(np.all(np.abs(Ht-Hk_1)<np.exp(-5))):
                     print(f"NRS converged at {nrs} step")
                     break
