@@ -51,14 +51,15 @@ class FEA():
 Method solve(): -
 =============================================================================================================================
 Variables: -
-nrs     ->     Newton Raphson Steps recorder (Breaks the NRS loop if steps are more than 9)
-t       ->     time
-E       ->     Instance of Elemental subroutine class
-Hk      ->     Enthalpy calculated in the previous time Step
-Hk+1    ->     Enthalpy calculated in the current Newton Raphson Step
-Ht      ->     Enthalpy in the previous NRS step, acts as a condition to break the NRS loop
-Tk      ->     Temperature calculated in the previous Newton Raphson Step
-Tk-1    ->     Temperature calculated in the current Newton Raphson Step
+nrs         ->     Newton Raphson Steps recorder (Breaks the NRS loop if steps are more than 9)
+t           ->     varible for time iteration
+End_time    ->     Total time for which Simulation runs
+E           ->     Instance of Elemental subroutine class
+Hk          ->     Enthalpy calculated in the previous time Step
+Hk+1        ->     Enthalpy calculated in the current Newton Raphson Step
+Ht          ->     Enthalpy in the previous NRS step, acts as a condition to break the NRS loop
+Tk          ->     Temperature calculated in the previous Newton Raphson Step
+Tk-1        ->     Temperature calculated in the current Newton Raphson Step
 -----------------------------------------------------------------------------------------------------------------------------
 The method works as follows: -
 1) Extraction of the latest temperature and enthalpy values from the global temperature Tg and enthalpy Hg vectors 
@@ -70,7 +71,8 @@ The method works as follows: -
 #############################################################################################################################   
     def solve(self):
         E = Elemental_Subroutine()
-        for t in range(5):
+        End_time = (1 if ip.test_case ==1 else 2)
+        for t in range(End_time):
             nrs = 0
             Hk = self.Hg[:,t][:,np.newaxis].copy()
             Hk_1 = Hk.copy()
@@ -105,10 +107,11 @@ The method works as follows: -
 EntlpyApp = FEA()
 EntlpyApp.solve()
 
-#Tverify = HTv(EntlpyApp.Tg[:,0],ip.n,EntlpyApp.Mesh.nl,ip.alpha).T_analytical
-#print(EntlpyApp.Tg)
-#print(EntlpyApp.Hg)
-pp.plotTemprature(EntlpyApp.Tg[:,0],EntlpyApp.Tg[:,-1],1)
-#pp.Simultaneous_Plotter(EntlpyApp.Tg,'Temperature',EntlpyApp.Hg,'Enthalpy')
-'''pp.plotVerify(EntlpyApp.Tg[:,0],'Initial_Temperature',EntlpyApp.Tg[:,-1],
-              'Final Temperature from the numerical scheme',Tverify,'Analytical Temperature')'''
+
+if ip.test_case == 1:
+    Tverify = HTv(EntlpyApp.Tg[:,0],ip.n,EntlpyApp.Mesh.nl,ip.alpha).T_analytical
+    pp.plotVerify(EntlpyApp.Tg[:,0],'Initial_Temperature',EntlpyApp.Tg[:,-1],
+              'Final Temperature from the numerical scheme',Tverify,'Analytical Temperature')
+else:
+    pp.plotTemprature(EntlpyApp.Tg[:,0],EntlpyApp.Tg[:,-1],1)
+    #pp.Simultaneous_Plotter(EntlpyApp.Tg,'Temperature',EntlpyApp.Hg,'Enthalpy')
