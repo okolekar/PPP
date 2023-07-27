@@ -7,8 +7,13 @@ inputs -> Script where all the inputs are defined
 Material_Subroutine -> All material specific equations and parameters are processed here'''
 #############################################################################################################################
 import numpy as np
-import inputs
-from Material_Subroutine import Amorphus_model as Amor_routine
+import Processed_Inputs as inputs
+if inputs.mat_type == 1:
+    from Material_Subroutine import Crystal_model as Mat_routine
+    print('Crystalline material detected @ Elemental Subroutine')
+elif inputs.mat_type == 2:
+    from Material_Subroutine import Amorphus_model as Mat_routine
+    print('Amorphous material detected @ Elemental Subroutine')
 '''
 #############################################################################################################################
 Class Elemental_Subroutine: -
@@ -19,9 +24,10 @@ e_1 is the is the subscript used for current NRS vector and e is used for the pr
 -----------------------------------------------------------------------------------------------------------------------------
 Attributes: -
 -------------
-    A       ->      Stores the assembly matrix for the specific element
-    Gg      ->      The global G vector (Similar to the Residual Vector)
-    dGg     ->      The global dG vector (Similar to the Tangent Stiffness Matrix)
+    A           ->      Stores the assembly matrix for the specific element
+    Gg          ->      The global G vector (Similar to the Residual Vector)
+    dGg         ->      The global dG vector (Similar to the Tangent Stiffness Matrix)
+    runcount    ->      Records the number of times the methods of this class was called
 -----------------------------------------------------------------------------------------------------------------------------
 Methods : -
 =============================================================================================================================
@@ -35,19 +41,21 @@ class Elemental_Subroutine():
         self.A = None
         self.Gg = np.zeros(inputs.n).reshape(inputs.n,1)
         self.dGg = np.zeros(inputs.n).reshape(inputs.n,1)
+        self.runcount = 0
 
-    def update_Aly(self,i):               # here the n represents the total number of elements and p represents the current element
-        self.A = np.zeros((inputs.n,2))   # Assembly matrix
+    def update_Aly(self,i):         
+        self.A = np.zeros((inputs.n,2))   
         self.A[i,0] = 1
         self.A[i+1,1] = 1
 
     def get_param(self,Hk,Hk_1,Tk_1,Mesh):
-        SS304L = Amor_routine(Mesh)
+        Mat = Mat_routine(Mesh,self.runcount)
         for i in range(inputs.n-1):
             self.update_Aly(i)
             He = np.matmul(self.A.T,Hk)
             He_1 = np.matmul(self.A.T,Hk_1)
             Te_1 = np.matmul(self.A.T,Tk_1)
-            SS304L.get_param(He_1,Te_1,He,i)
-            self.Gg = self.Gg + np.matmul(self.A,SS304L.G)
-            self.dGg = self.dGg + np.matmul(np.matmul(self.A,SS304L.dG),self.A.T)
+            Mat.get_param(He_1,Te_1,He,i)
+            self.runcount += 1
+            self.Gg = self.Gg + np.matmul(self.A,Mat.G)
+            self.dGg = self.dGg + np.matmul(np.matmul(self.A,Mat.dG),self.A.T)
