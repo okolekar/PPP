@@ -10,16 +10,17 @@ Material_Subroutine -> All material specific equations and parameters are proces
 import numpy as np
 try:
      mat_type = int(input("Enter 1 for crystalline material and 2 for amorphous material: -  "))
+     test_case =int(input("Enter 1 to run the Heat Transfer Test case or 0 to disable: -  "))
 except ValueError as e:
-     raise ValueError("Invalid input detected. Please enter 1 or 2 for the respective element.")
+     raise ValueError("Invalid input detected for material type or test case scenario.")
 if mat_type != 1 and mat_type != 2:
     raise ValueError("Incorrect material type. Please enter 1 or 2 for the respective element.")
 
 if mat_type == 1:
-     import inputs_Al_Material as ip
+     import Crystalline_inputs as ip
 
 if mat_type == 2:
-     import inputs as ip
+     import Amorphous_inputs as ip
 
 '''
 #############################################################################################################################
@@ -27,6 +28,7 @@ Script: -
 =============================================================================================================================
 Variables: -
 mat_type  ->     Indicates the type of material
+test_case ->     Check whether to run test case
 ratioI    ->     Dimensionless input Laser Ratio
 alpha     ->     Conductivity
 delt      ->     Time step 
@@ -77,6 +79,7 @@ if mat_type == 2:
      Hliq = D*Tliq + D*lambf
      alpha = ip.k/(ip.rho*ip.c)
      length = ip.Iref/(ip.k*(ip.vapourpt-ip.soliduspt))
-
+if test_case == 1:
+     Ta = 0
 tm = (ip.Iref**2*Ta**2*np.pi)/(4*ip.I**2)
 t_start = delt
