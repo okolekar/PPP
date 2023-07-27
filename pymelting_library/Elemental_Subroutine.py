@@ -3,7 +3,7 @@ Library: - Elemental Subroutine
 #############################################################################################################################
 Importing the required libraries: -
 -----------------------------------------------------------------------------------------------------------------------------
-inputs -> Script where all the inputs are defined
+Processed_Inputs    -> Script where all the inputs are defined
 Material_Subroutine -> All material specific equations and parameters are processed here'''
 #############################################################################################################################
 import numpy as np
