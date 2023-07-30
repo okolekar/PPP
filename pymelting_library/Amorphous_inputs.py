@@ -11,4 +11,5 @@ n = 51                           #number of nodes
 c = 700                          #specific heat capacity                    # in J/kg/K
 rho = 7200                       #density of the material                   # kg/m**3  
 Lf = 261000                      #latent  heat of fusion                    # J/kg   
-depth = 1                        #total depth to be simulated               # meters
+depth = 1                        #total depth to be simulated               # meters  
+t_end = 3                        #End time for simulation                   # dimensionless
