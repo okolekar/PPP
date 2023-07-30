@@ -5,14 +5,15 @@ Importing the standard library: -
 -----------------------------------------------------------------------------------------------------------------------------
 Crystalline_inputs  -> Script where all the inputs for crystalline material are defined
 Amorphous_inputs    -> Script where all the inputs for amorphous material are defined
-Material_Subroutine -> All material specific equations and parameters are processed here'''
 #############################################################################################################################
+'''
 import numpy as np
 try:
      mat_type = int(input("Enter 1 for crystalline material and 2 for amorphous material: -  "))
      test_case =int(input("Enter 1 to run the Heat Transfer Test case or 0 to disable: -  "))
 except ValueError as e:
      raise ValueError("Invalid input detected for material type or test case scenario.")
+
 if mat_type != 1 and mat_type != 2:
     raise ValueError("Incorrect material type. Please enter 1 or 2 for the respective element.")
 
@@ -28,7 +29,7 @@ Script: -
 =============================================================================================================================
 Variables: -
 mat_type  ->     Indicates the type of material
-test_case ->     Check whether to run test case
+test_case ->     Check whether to run the test case
 ratioI    ->     Dimensionless input Laser Ratio
 alpha     ->     Conductivity
 delt      ->     Time step 
@@ -39,6 +40,7 @@ length    ->     Dimensionless Length
 lambf     ->     Dimensionless Material Constant
 t_start   ->     Dimensionless start time of the simulation
 tm        ->     Dimensionless time when the material starts to melt
+t_end     ->     End time for the simulation
 -----------------------------------------------------------------------------------------------------------------------------
 Tests Performed: -
 =============================================================================================================================
@@ -48,19 +50,27 @@ Tests Performed: -
 3) Checks if all the dimensionless material specific parameters are positive.                                                                     
 #############################################################################################################################
 '''
-if ip.Lf < 0 or ip.vapourpt<0 or ip.k<0 or ip.delt<0 or ip.n < 2 or ip.rho < 0 or ip.c<0:
+if ip.Lf < 0 or ip.vapourpt<0 or ip.k<0 or ip.delt<0 or ip.n < 2 or ip.rho < 0 or ip.c<0 or ip.I < 0 or ip.Iref <= 0\
+       or ip.t_end < 0:
         raise ValueError("Incorrect material input arguments")
+#===========================================================================================================================#
+                                   #Defining the dimensionless Parameters
+#===========================================================================================================================#
 ratioI = ip.I/ip.Iref
 alpha = ip.k/(ip.rho*ip.c)
 delt = ip.delt
 n = ip.n
+t_start = delt
+'''
+#############################################################################################################################
+Crystaline Material Specific Dimensionless Parameters: -
+#############################################################################################################################
+'''
 if mat_type == 1:
-    Ta = (293-ip.meltpt)/(ip.vapourpt-ip.meltpt)             # ambient temperature in Dimensionless.
+    Ta = (293-ip.meltpt)/(ip.vapourpt-ip.meltpt)             
     D = ip.rho*ip.c*(ip.vapourpt-ip.meltpt)/((ip.rho*ip.c*ip.vapourpt+ip.Lf*ip.rho)-(ip.rho*ip.c*ip.meltpt))
     length = (ip.depth*ip.Iref)/(ip.k*(ip.vapourpt-ip.meltpt))
-    lambf = ip.Lf/(ip.c*(ip.vapourpt-ip.meltpt)) 	  	     # The lambda constant
-    if D < 0 or lambf < 0 or alpha < 0 or ratioI<0 or ip.meltpt<0 :
-        raise ValueError("Incorrect material input arguments")
+    lambf = ip.Lf/(ip.c*(ip.vapourpt-ip.meltpt))
 '''
 #############################################################################################################################
 Amorphous Material Specific Dimensionless Parameters: -
@@ -72,14 +82,27 @@ Hliq      ->     Dimensionless Liquidus Enthalpy
 #############################################################################################################################
 '''
 if mat_type == 2:
-     Tliq = (ip.liquidouspt-ip.soliduspt)/(ip.vapourpt-ip.soliduspt)                #Dimensionless 	  	         #Liq. Temp.
+     Tliq = (ip.liquidouspt-ip.soliduspt)/(ip.vapourpt-ip.soliduspt)                
      D = ip.rho*ip.c*(ip.vapourpt-ip.soliduspt)/((ip.rho*ip.c*ip.vapourpt+ip.Lf*ip.rho)-(ip.rho*ip.c*ip.soliduspt))
-     Ta = (293-ip.soliduspt)/(ip.vapourpt-ip.soliduspt)                             # ambient temperature in Dimensionless.
-     lambf = ip.Lf/(ip.c*(ip.vapourpt-ip.soliduspt)) 	  	                                # The lambda constant
+     Ta = (293-ip.soliduspt)/(ip.vapourpt-ip.soliduspt)                             
+     lambf = ip.Lf/(ip.c*(ip.vapourpt-ip.soliduspt)) 	  	                        
      Hliq = D*Tliq + D*lambf
      alpha = ip.k/(ip.rho*ip.c)
      length = ip.Iref/(ip.k*(ip.vapourpt-ip.soliduspt))
+#===========================================================================================================================#
+                         #Testing if the dimensionless parameters are correctly calculated
+#===========================================================================================================================# 	  	     
+if D < 0 or lambf < 0 or alpha < 0 or ratioI<0 or length < 0 :
+     raise ValueError("Incorrect material input arguments")
+'''
+#===========================================================================================================================#
+Checking the test case scenario.
+For test case, setting the length to unity and Ta = 0 as per the assumption
+#===========================================================================================================================#
+'''
 if test_case == 1:
      Ta = 0
-tm = (ip.Iref**2*Ta**2*np.pi)/(4*ip.I**2)
-t_start = delt
+     length = 1
+else:
+     tm = (ip.Iref**2*Ta**2*np.pi)/(4*ip.I**2)
+     t_end = ip.t_end
