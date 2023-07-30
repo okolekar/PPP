@@ -35,17 +35,17 @@ Attributes: -
     Mesh   ->   Instance of Mesh class stores mesh related parameters
       Tg   ->   Global temperature vector stores the temperature distribution for each time step
       Hg   ->   Global enthalpy vector stores the enthalpy distribution for each time step
+        *subscript g shows its a global vector
 -----------------------------------------------------------------------------------------------------------------------------
 1) The FEA class is the starting point of the numerical scheme.
-2) The main goal of this class is to calculate Tg and Hg vectors for given duration of time using the solve method.                  
-3) The init of this class is decorated by the check inputs, which ensures that the input parameters are in 
-   the admissible range.'''
+2) The main goal of this class is to calculate Tg and Hg vectors for given duration of time using the solve method.          
 #############################################################################################################################
+'''
 class FEA():
     def __init__(self):
         self.Mesh = Mesh()
-        self.Tg = IT(self.Mesh.nl).T                    #The dot T shows that I access the Temperature variable. #it was 0.51
-        self.Hg = update(T = self.Tg,H=None,run = 0)            #subscript g shows its a global vector                               
+        self.Tg = IT(self.Mesh.nl).T                    #The dot T shows that I access the Temperature variable.
+        self.Hg = update(T = self.Tg,H=None,run = 0)                                   
     '''
 #############################################################################################################################
 Method solve(): -
@@ -71,7 +71,7 @@ The method works as follows: -
 #############################################################################################################################   
     def solve(self):
         E = Elemental_Subroutine()
-        End_time = (1 if ip.test_case ==1 else 2)
+        End_time = (3 if ip.test_case ==1 else ip.t_end)
         for t in range(End_time):
             nrs = 0
             Hk = self.Hg[:,t][:,np.newaxis].copy()
@@ -85,7 +85,7 @@ The method works as follows: -
                 Ht = Hk_1.copy()
                 E.get_param(Hk,Hk_1,Tk_1,self.Mesh)
 #===========================================================================================================================#
-                # Application of the Dirichlet Boundary Condition.
+                # Application of the Dirichlet Boundary Condition at the last node.
 #===========================================================================================================================#
                 E.Gg[ip.n-1] = 0
                 E.dGg[ip.n-1] = 0
@@ -97,7 +97,7 @@ The method works as follows: -
                 if nrs == 1 and t == 0:
                     print("\nAll tests were successfully performed and no abnormalities detected\n")
                 if(np.all(np.abs(Ht-Hk_1)<np.exp(-5))):
-                    print(f"NRS converged at {nrs} step")
+                    print(f"Solution converged in {nrs} step, for t = {t}")
                     break
                 elif(nrs > 9):
                     raise ValueError('Convergence failed to achieve in 10 nrs steps')
@@ -107,11 +107,10 @@ The method works as follows: -
 EntlpyApp = FEA()
 EntlpyApp.solve()
 
-
 if ip.test_case == 1:
-    Tverify = HTv(EntlpyApp.Tg[:,0],ip.n,EntlpyApp.Mesh.nl,ip.alpha).T_analytical
+    Tverify = HTv(EntlpyApp.Tg[:,1],ip.n,EntlpyApp.Mesh.nl,ip.alpha).T_analytical
     pp.plotVerify(EntlpyApp.Tg[:,0],'Initial_Temperature',EntlpyApp.Tg[:,-1],
-              'Final Temperature from the numerical scheme',Tverify,'Analytical Temperature')
+              'Final Temperature from the numerical scheme',Tverify[1:],'Analytical Temperature')
 else:
     pp.plotTemprature(EntlpyApp.Tg[:,0],EntlpyApp.Tg[:,-1],1)
     #pp.Simultaneous_Plotter(EntlpyApp.Tg,'Temperature',EntlpyApp.Hg,'Enthalpy')
