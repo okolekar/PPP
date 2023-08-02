@@ -11,3 +11,4 @@ c = 9.0*10**2                   #specific heat capacity               # in J/kg/
 rho = 2.7*10**3                 #density of the material              # kg/m**3  
 Lf = 3.6*10**5                  #latent  heat of fusion               # J/kg     
 depth = 1                       #total depth to be simulated          # meters
+t_end = 3                        #End time for simulation             # dimensionless
