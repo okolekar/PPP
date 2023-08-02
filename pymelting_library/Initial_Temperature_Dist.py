@@ -75,6 +75,7 @@ during the simualtion
                 if i == len(self.T)-1:
                     self.T[i] = ip.Ta #This takes care of the boundary condition
                 else:
+                    print("Zero Division error in Initial Temperature. Changing t_start to delt")
                     self.T[i] = (F*(2*np.sqrt(ip.t_start/np.pi)
                                     *np.exp(-list[i]**2/(4*ip.delt))
                                     -list[i]*m.erfc(list[i]/(2*np.sqrt(ip.delt))))
