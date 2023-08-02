@@ -8,12 +8,27 @@ Amorphous_inputs    -> Script where all the inputs for amorphous material are de
 #############################################################################################################################
 '''
 import numpy as np
+'''
+#############################################################################################################################
+get_input function: -
+-----------------------------------------------------------------------------------------------------------------------------
+Takes care of the scenario when no inputs are passed and runs the default test
+#############################################################################################################################
+'''
+def get_input(prompt, default_value):
+    user_input = input(f"{prompt} else default case {default_value}: - ")
+    return user_input if user_input else default_value
+#---------------------------------------------------------------------------------------------------------------------------#
 try:
-     mat_type = int(input("Enter 1 for crystalline material and 2 for amorphous material: -  "))
-     test_case =int(input("Enter 1 to run the Heat Transfer Test case or 0 to disable: -  "))
+     mat_type  = get_input("Enter 1 for crystalline material and 2 for amorphous material,",2)
+     test_case = get_input("Enter 1 to run the Heat Transfer Test case or 0 to disable,",0)
+     mat_type = int(mat_type)
+     test_case = int(test_case)
 except ValueError as e:
-     raise ValueError("Invalid input detected for material type or test case scenario.")
-
+     raise e
+#===========================================================================================================================#
+                         #Check if the material type is entered correctly
+#===========================================================================================================================#
 if mat_type != 1 and mat_type != 2:
     raise ValueError("Incorrect material type. Please enter 1 or 2 for the respective element.")
 
@@ -22,7 +37,6 @@ if mat_type == 1:
 
 if mat_type == 2:
      import Amorphous_inputs as ip
-
 '''
 #############################################################################################################################
 Script: -
