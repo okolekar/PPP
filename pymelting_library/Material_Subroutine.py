@@ -49,12 +49,12 @@ class Material_model():
             b = np.array([[mm.ratioI],
                             [0]])
         elif boundry_node == 1:
-            b = - mm.Ta*self.Ele.dphi[1]*self.Ele.dphi
+            b = - mm.Ta*self.Ele.dphi[1]*self.Ele.dphi*self.Ele.J
         else:
             b = np.array([[0],
                           [0]])
-        M = np.matmul(self.Ele.phi,self.Ele.phi.reshape(1,2))
-        N = np.matmul(self.Ele.dphi,self.Ele.dphi.reshape(1,2))
+        M = np.matmul(self.Ele.phi,self.Ele.phi.reshape(1,2))*self.Ele.J
+        N = np.matmul(self.Ele.dphi,self.Ele.dphi.reshape(1,2))*self.Ele.J
         return[b,M,N]
 
     def Quad_Integ(self,ele_no):
