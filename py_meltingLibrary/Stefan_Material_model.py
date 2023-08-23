@@ -41,8 +41,8 @@ class Stefan_Material_Model():
             self.Ml = np.array([[mesh.J,           0],
                                 [0     ,    mesh.J*2]])
             
-            self.Nl = np.array([[(1/(6*(mm.n)))*ds_dt+1/(mesh.J*2),   -(1/(6*(mm.n)))*ds_dt-1/(mesh.J*2)],
-                                [              0                ,    (1/(3*(mm.n)))*ds_dt+2/(mesh.J*2)]])
+            self.Nl = np.array([[(1/(6*mm.n))*ds_dt+1/(mesh.J*2),   -(1/(6*mm.n))*ds_dt-1/(mesh.J*2)],
+                                [              0                ,    (1/(3*mm.n))*ds_dt+2/(mesh.J*2)]])
 
             self.bl = np.array([[mm.ratioI],
                                 [    0    ]])
@@ -65,10 +65,10 @@ class Stefan_Material_Model():
         self.Ns = np.array([[-(ds_dt/(mm.m*3))+2/(2*mesh.J)                  ,   -((3*mm.m-3*(ele_no+1) + 2)*ds_dt/(6*mm.m))-(1/mesh.J*2)],
                             [(3*mm.m-3*ele_no-2)*ds_dt/(6*mm.m)-1/(mesh.J*2) ,                               -(ds_dt/(mm.m*3))+2/(2*mesh.J)]])
         
-        if ele_no == 0:
+        if ele_no == mm.m-1:                      #changed here 23 08 2023 5 pm
             b = mm.Ta*((ds_dt/(3*mm.m))+1/(mesh.J*2))
             self.bs = np.array([[b],
                                 [0]])
         else:
-            b = np.array([[0],
-                          [0]])
+            self.bs = np.array([[0],
+                                [0]])
