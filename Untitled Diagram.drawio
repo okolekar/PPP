@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-08-28T16:36:09.665Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="OX3ZXrZgIF-Wiv1gQ_GB" version="21.6.9" type="github">
+<mxfile host="app.diagrams.net" modified="2023-08-28T16:37:05.530Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="bTn6ShahRGJWNjLczkef" version="21.6.9" type="github">
   <diagram name="Page-1" id="D3Ey8p9wxDZOqgnlG4tk">
     <mxGraphModel dx="1078" dy="472" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -159,7 +159,7 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-27" value="If nrs &amp;gt; 9" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="k1HMzf10UT7rga_kBx_9-27" value="If &lt;b&gt;&lt;i&gt;nrs&lt;/i&gt;&lt;/b&gt; &amp;gt; 9" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="409.26" y="864" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="vaHdqAgPK7z6LxYDH7Z_-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="k1HMzf10UT7rga_kBx_9-37" target="k1HMzf10UT7rga_kBx_9-81">
@@ -170,7 +170,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-37" value="display the solution converged in nrs newton raphson step" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="k1HMzf10UT7rga_kBx_9-37" value="display the solution converged in &lt;b&gt;&lt;i&gt;nrs&lt;/i&gt;&lt;/b&gt; newton raphson step" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="559.25" y="841" width="180" height="30" as="geometry" />
         </mxCell>
         <mxCell id="vaHdqAgPK7z6LxYDH7Z_-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="k1HMzf10UT7rga_kBx_9-49" target="vaHdqAgPK7z6LxYDH7Z_-18">
@@ -193,7 +193,7 @@
         <mxCell id="vaHdqAgPK7z6LxYDH7Z_-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="k1HMzf10UT7rga_kBx_9-81" target="k1HMzf10UT7rga_kBx_9-2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-81" value="Record the Temperature and Enthalpy values in the attribute of the FEA class&amp;nbsp;&lt;br&gt;self.Tg = stack the new temperature fields Tk_1&lt;br&gt;self.Hg = stack the new Enthalpy fields Hk_1" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
+        <mxCell id="k1HMzf10UT7rga_kBx_9-81" value="Record the Temperature and Enthalpy values in the attribute of the FEA class&amp;nbsp;&lt;br&gt;&lt;b&gt;&lt;u&gt;self.Tg&lt;/u&gt;&lt;/b&gt; = stack the new temperature fields &lt;b&gt;&lt;u&gt;Tk_1&lt;/u&gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;&lt;u&gt;self.Hg&lt;/u&gt;&lt;/b&gt; = stack the new Enthalpy fields &lt;b&gt;&lt;u&gt;Hk_1&lt;/u&gt;&lt;/b&gt;" style="whiteSpace=wrap;html=1;rounded=1;" parent="1" vertex="1">
           <mxGeometry x="259.95000000000005" y="1032" width="384.3" height="60" as="geometry" />
         </mxCell>
         <mxCell id="vaHdqAgPK7z6LxYDH7Z_-18" value="End" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" vertex="1" parent="1">
