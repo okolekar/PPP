@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-08-28T18:25:25.173Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="ndwqKWUVvrd55cUUWK2V" version="21.6.9" type="github">
+<mxfile host="app.diagrams.net" modified="2023-08-28T19:11:54.057Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="oQpzq6blbx_yucO9BxQ3" version="21.6.9" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="683" dy="377" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="819" dy="453" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -25,7 +25,7 @@
         <mxCell id="kek3UWhqLJTVrwC81gtJ-8" value="The &lt;b&gt;n&lt;/b&gt;&amp;nbsp;is used here as the &lt;u&gt;&lt;i&gt;number of nodes,&amp;nbsp;&lt;/i&gt;&lt;/u&gt;hence the element is &lt;b&gt;n-1&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="590" y="70" width="161" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="kek3UWhqLJTVrwC81gtJ-9" value="A = update the Assembly matrix for.&lt;br&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;He = A&lt;/span&gt;&lt;sup style=&quot;background-color: initial;&quot;&gt;T&lt;/sup&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;*&lt;/span&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Hk (Extracting the elemental enthalpy at previous time step form global Enthalpy vector at previous time step)&lt;/span&gt;&lt;/div&gt;&lt;sup&gt;&amp;nbsp;He_1 = AT*Hk_1&lt;/sup&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="kek3UWhqLJTVrwC81gtJ-9" value="A = update the Assembly matrix for.&lt;br&gt;&lt;div style=&quot;&quot;&gt;He = A&lt;sup&gt;T&lt;/sup&gt;*Hk (Extracting the elemental enthalpy at previous time step form global Enthalpy vector at previous time step)&lt;/div&gt;&amp;nbsp;&lt;span style=&quot;&quot;&gt;He_1 = A&lt;sup&gt;T&lt;/sup&gt;*Hk_1&amp;nbsp;&lt;/span&gt;(Extracting the elemental enthalpy at current time step form global Enthalpy vector at current time step)&lt;br&gt;Te_1 = A&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;&lt;sup&gt;T&lt;/sup&gt;&lt;/span&gt;&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;*&lt;/span&gt;&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;Tk_1 (Extracting the elemental temperature at current time step form global temperature vector at current time step)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="190" y="200" width="430" height="120" as="geometry" />
         </mxCell>
       </root>
