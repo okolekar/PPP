@@ -1,96 +1,99 @@
-<mxfile host="app.diagrams.net" modified="2023-08-28T19:34:43.149Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="aGeie0_nIE6KCFjFEcds" version="21.6.9" type="github">
+<mxfile host="app.diagrams.net" modified="2023-08-28T19:39:31.112Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="Zef2bUf9EwV0XjLFLMqB" version="21.6.9" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="819" dy="453" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="kek3UWhqLJTVrwC81gtJ-21" value="Class Elemental_Subroutine()" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="136" y="18" width="633" height="26" as="geometry" />
+          <mxGeometry x="136" y="33" width="633" height="26" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-22" value="&lt;u&gt;Attributes&lt;/u&gt;: -&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;b&gt;&lt;u&gt;self.A&lt;/u&gt;&lt;/b&gt; = stores the Assembly matrix for the given&amp;nbsp; &amp;nbsp; &amp;nbsp; &lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp;element number&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;b&gt;&lt;u&gt;self.Gg&lt;/u&gt;&lt;/b&gt; = Global Residual Vector&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;b&gt;&lt;u&gt;self.dGg &lt;/u&gt;&lt;/b&gt;= Global Tangent Stiffness Matrix" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="136" y="44" width="308" height="115" as="geometry" />
+          <mxGeometry x="136" y="59" width="308" height="115" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-23" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="136" y="157" width="632" height="647" as="geometry" />
+          <mxGeometry x="136" y="172" width="633" height="647" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="kek3UWhqLJTVrwC81gtJ-59" target="kek3UWhqLJTVrwC81gtJ-61">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-59" value="Start" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="397.97" y="207" width="70" height="30" as="geometry" />
+          <mxGeometry x="397.97" y="222" width="70" height="30" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="kek3UWhqLJTVrwC81gtJ-61" target="kek3UWhqLJTVrwC81gtJ-63">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-61" value="&lt;u style=&quot;font-weight: bold;&quot;&gt;Mat &lt;/u&gt;= Object of the elemental Subroutine" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="282.97" y="257" width="300" height="40" as="geometry" />
+          <mxGeometry x="282.97" y="272" width="300" height="40" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.522;entryY=0.001;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="kek3UWhqLJTVrwC81gtJ-63" target="kek3UWhqLJTVrwC81gtJ-66">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-63" value="For i in all the elements i.e &lt;b&gt;n&lt;/b&gt;-1" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="317.97" y="317" width="230" height="20" as="geometry" />
+          <mxGeometry x="317.97" y="332" width="230" height="20" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-64" value="The &lt;b&gt;n&lt;/b&gt;&amp;nbsp;is used here as the &lt;u&gt;&lt;i&gt;number of nodes,&amp;nbsp;&lt;/i&gt;&lt;/u&gt;hence the element is &lt;b&gt;n-1&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="608.97" y="247" width="161" height="60" as="geometry" />
+          <mxGeometry x="608.97" y="262" width="161" height="60" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-65" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="kek3UWhqLJTVrwC81gtJ-66" target="kek3UWhqLJTVrwC81gtJ-68">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-66" value="self.update_Aly(i) = update the Assembly matrix for.&lt;br&gt;&lt;div style=&quot;&quot;&gt;&lt;b&gt;&lt;u&gt;He&lt;/u&gt;&lt;/b&gt; = &lt;b&gt;&lt;u&gt;self.A&lt;sup&gt;T&lt;/sup&gt;*Hk&lt;/u&gt;&lt;/b&gt; (Extracting the elemental enthalpy at previous time step form global Enthalpy vector at previous time step)&lt;/div&gt;&amp;nbsp;&lt;u&gt;&lt;b&gt;He_1&lt;/b&gt;&lt;/u&gt; = &lt;b&gt;&lt;u&gt;A&lt;sup&gt;T&lt;/sup&gt;*Hk_1&lt;/u&gt;&lt;/b&gt;&amp;nbsp;(Extracting the elemental enthalpy at current time step form global Enthalpy vector at current time step)&lt;br&gt;&lt;b&gt;&lt;u&gt;Te_1&lt;/u&gt;&lt;/b&gt; = &lt;u&gt;&lt;b&gt;A&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;&lt;sup&gt;T&lt;/sup&gt;&lt;/span&gt;&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;*&lt;/span&gt;&lt;/b&gt;&lt;/u&gt;&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;&lt;u&gt;&lt;b&gt;Tk_1&lt;/b&gt;&lt;/u&gt; (Extracting the elemental temperature at current time step form global temperature vector at current time step)&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="208.97" y="357" width="430" height="120" as="geometry" />
+          <mxGeometry x="208.97" y="372" width="430" height="120" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-67" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="kek3UWhqLJTVrwC81gtJ-68" target="kek3UWhqLJTVrwC81gtJ-70">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-68" value="&lt;b&gt;&lt;u&gt;Mat&lt;/u&gt;&lt;/b&gt;.get_param() -&amp;gt; Generates the elemental residual vector &lt;b&gt;&lt;u&gt;G&lt;/u&gt;&lt;/b&gt; and the elemental Tangental Matrix &lt;u style=&quot;font-weight: bold;&quot;&gt;dG&lt;/u&gt;&amp;nbsp;by passing the &lt;b&gt;&lt;u&gt;He&lt;/u&gt;&lt;/b&gt;,&amp;nbsp;&lt;b&gt;&lt;u&gt;He_1&lt;/u&gt;&lt;/b&gt; and &lt;b&gt;&lt;u&gt;Te_1&lt;/u&gt;&lt;/b&gt;" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="252.72" y="497" width="342.5" height="70" as="geometry" />
+          <mxGeometry x="252.72" y="512" width="342.5" height="70" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-69" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="kek3UWhqLJTVrwC81gtJ-70" target="kek3UWhqLJTVrwC81gtJ-72">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-70" value="Update the run count" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="366.47" y="587" width="115" height="20" as="geometry" />
+          <mxGeometry x="366.47" y="602" width="115" height="20" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-71" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="kek3UWhqLJTVrwC81gtJ-72" target="kek3UWhqLJTVrwC81gtJ-74">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-72" value="form the global residual vector and the tangent stiffness matrix&amp;nbsp;&lt;br&gt;&lt;b&gt;&lt;u&gt;self.Gg&lt;/u&gt;&lt;/b&gt; = &lt;b&gt;&lt;u&gt;self.Gg&lt;/u&gt;&lt;/b&gt; + &lt;b&gt;&lt;u&gt;self.AT*Mat.G&lt;/u&gt;&lt;/b&gt;&lt;br&gt;&lt;b&gt;&lt;u&gt;self.dG&lt;/u&gt;&lt;/b&gt; = &lt;b&gt;&lt;u&gt;self.dG&lt;/u&gt;&lt;/b&gt; + &lt;u&gt;&lt;b&gt;self.A*Mat.dG*self.A&lt;sup&gt;T&lt;/sup&gt;&lt;/b&gt;&lt;/u&gt;" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="301.47" y="627" width="245" height="105" as="geometry" />
+          <mxGeometry x="301.47" y="642" width="245" height="105" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="kek3UWhqLJTVrwC81gtJ-63" target="kek3UWhqLJTVrwC81gtJ-63">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="678.97" y="327" />
-              <mxPoint x="678.97" y="747" />
-              <mxPoint x="148.97" y="747" />
-              <mxPoint x="148.97" y="327" />
+              <mxPoint x="678.97" y="342" />
+              <mxPoint x="678.97" y="762" />
+              <mxPoint x="148.97" y="762" />
+              <mxPoint x="148.97" y="342" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-74" value="End" style="whiteSpace=wrap;html=1;rounded=1;arcSize=50;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="381.47" y="767" width="85" height="22.5" as="geometry" />
+          <mxGeometry x="381.47" y="782" width="85" height="22.5" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-75" value="&lt;h1&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;get_param(Hk, Hk_1, Tk_1, Mesh)&lt;/font&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="136" y="157" width="416" height="42" as="geometry" />
+          <mxGeometry x="136" y="172" width="416" height="42" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-76" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="444" y="44" width="325" height="62" as="geometry" />
+          <mxGeometry x="444" y="59" width="325" height="113" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-78" value="&lt;b&gt;Method to update the Attribute&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="421" y="41" width="254" height="30" as="geometry" />
+          <mxGeometry x="421" y="56" width="254" height="30" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-79" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="444" y="64" width="324" height="42" as="geometry" />
+          <mxGeometry x="444" y="79" width="200" height="42" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-80" value="self.Update_Aly" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="434" y="76" width="118" height="30" as="geometry" />
+          <mxGeometry x="429.97" y="91" width="118" height="30" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-81" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="444" y="106" width="324" height="51" as="geometry" />
+          <mxGeometry x="444" y="121" width="200" height="51" as="geometry" />
         </mxCell>
         <mxCell id="kek3UWhqLJTVrwC81gtJ-82" value="self.get_param(Hk,Hk_1,Tk_1,Mesh)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="518" y="116.5" width="60" height="30" as="geometry" />
+          <mxGeometry x="514" y="124" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="kek3UWhqLJTVrwC81gtJ-83" value="Hk = enthalpy at previous time step&lt;br&gt;Hk_1 = enthalpy at current time step&lt;br&gt;Tk_1 = temperature at current time step&lt;br&gt;Mesh = object of mesh class" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="552" y="186" width="239" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
