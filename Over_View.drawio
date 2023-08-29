@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-08-29T13:33:41.401Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="Czo0X0L6OU-x8slGebE2" version="21.6.9" type="github">
+<mxfile host="app.diagrams.net" modified="2023-08-29T13:35:29.099Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36" etag="yxkqT2_Lvm76CAXwftRf" version="21.6.9" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1434" dy="792" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -8,7 +8,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="zkfFHV4jXpPFQw0GAbJ--13" value="Amorphous_model" style="swimlane;fontStyle=7;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="80" y="713" width="160" height="360" as="geometry">
+          <mxGeometry x="62" y="713" width="160" height="360" as="geometry">
             <mxRectangle x="340" y="380" width="170" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -60,7 +60,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="zkfFHV4jXpPFQw0GAbJ--17" value="Elemental Subroutine" style="swimlane;fontStyle=7;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="316" y="293" width="196" height="190" as="geometry">
+          <mxGeometry x="298" y="293" width="196" height="190" as="geometry">
             <mxRectangle x="550" y="140" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -86,10 +86,10 @@
           <mxGeometry y="164" width="196" height="26" as="geometry" />
         </mxCell>
         <mxCell id="n5Hhk4JCk81zsRMZou9J-5" value="Calls the Elemental Subroutine to update the Enthalpy for the current newton raphson step&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="400" y="223" width="220" height="50" as="geometry" />
+          <mxGeometry x="382" y="223" width="220" height="50" as="geometry" />
         </mxCell>
         <mxCell id="n5Hhk4JCk81zsRMZou9J-17" value="Crystalline_model" style="swimlane;fontStyle=7;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="601" y="714" width="160" height="360" as="geometry">
+          <mxGeometry x="583" y="714" width="160" height="360" as="geometry">
             <mxRectangle x="340" y="380" width="170" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -154,7 +154,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="n5Hhk4JCk81zsRMZou9J-42" value="Call the Material Subroutine to &lt;br&gt;update the G and dG depending on the type of material and then return back to the FEA class.&amp;nbsp;" style="rhombus;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="257" y="523" width="313" height="220" as="geometry" />
+          <mxGeometry x="239" y="523" width="313" height="220" as="geometry" />
         </mxCell>
         <mxCell id="n5Hhk4JCk81zsRMZou9J-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="zkfFHV4jXpPFQw0GAbJ--2" target="n5Hhk4JCk81zsRMZou9J-48" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -165,7 +165,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="n5Hhk4JCk81zsRMZou9J-56" value="Variable Updater" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="70" y="163" width="110" height="30" as="geometry" />
+          <mxGeometry x="52" y="163" width="110" height="30" as="geometry" />
         </mxCell>
         <mxCell id="n5Hhk4JCk81zsRMZou9J-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="zkfFHV4jXpPFQw0GAbJ--2" target="n5Hhk4JCk81zsRMZou9J-56" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -184,7 +184,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="zkfFHV4jXpPFQw0GAbJ--0" value="FEA" style="swimlane;fontStyle=7;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="334" y="73" width="160" height="138" as="geometry">
+          <mxGeometry x="316" y="73" width="160" height="138" as="geometry">
             <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -214,7 +214,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="n5Hhk4JCk81zsRMZou9J-48" value="Initial_temp(node_list)" style="swimlane;fontStyle=7;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="640" y="223" width="160" height="138" as="geometry">
+          <mxGeometry x="622" y="223" width="160" height="138" as="geometry">
             <mxRectangle x="230" y="140" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -234,7 +234,7 @@
           <mxGeometry y="112" width="160" height="26" as="geometry" />
         </mxCell>
         <mxCell id="n5Hhk4JCk81zsRMZou9J-63" value="Class temp_der()" style="swimlane;fontStyle=7;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;rounded=0;shadow=0;strokeWidth=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="310" y="793" width="196" height="170" as="geometry">
+          <mxGeometry x="292" y="793" width="196" height="170" as="geometry">
             <mxRectangle x="550" y="140" width="160" height="26" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -266,7 +266,7 @@
           <mxGeometry x="4" y="20" width="366" height="30" as="geometry" />
         </mxCell>
         <mxCell id="n5Hhk4JCk81zsRMZou9J-77" value="Construction of the dG requires the dT_dH. This chart shows how it is updated for each type of material" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="297" y="970" width="234" height="56" as="geometry" />
+          <mxGeometry x="279" y="970" width="234" height="56" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
