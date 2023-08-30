@@ -3,16 +3,18 @@ Library: - Slope Matrix
 #############################################################################################################################
 Importing the required standard libraries   
 -----------------------------------------------------------------------------------------------------------------------------
-Processed_Inputs -> Script where all the inputs are defined                                                                         '''
+Processed_Inputs -> Script where all the inputs are defined                                                                  
 #############################################################################################################################
+'''
 import numpy as np
 import Processed_Inputs as ip
 '''
 #############################################################################################################################
 Check arguments Decorator: -
 -----------------------------------------------------------------------------------------------------------------------------
-Checks if exactly 2 argument are passed to this Class                                                                     '''
+Checks if exactly 2 argument are passed to this Class                                                                        
 #############################################################################################################################
+'''
 def check_arguments(func):
     def wrapper(self, *args,**kwargs):
         if len(args) == 3:
@@ -57,9 +59,18 @@ class temp_der():
 #===========================================================================================================================#
                             #Verify: - Checks if the off diagonal elements are zero
 #===========================================================================================================================# 
-    def verify(self):
+    def verify(self,Hk_1,c):
         if self.dT_dH[0][1] != 0 or self.dT_dH[1][0] != 0:
             raise ValueError("The 2*2 dT/dH Matrix is not constructed correctly")
+        if c == 1:
+            if Hk_1[0] >= 0 and Hk_1[0] <= ip.lambf*ip.D and self.dT_dH[0][0] != 0:
+                raise ValueError(f"Problem in dT/dH the Enthalpy at node 1 {Hk_1[0]} and corresponding dT/dH {self.dT_dH[0][0]}")
+            if Hk_1[1] >= 0 and Hk_1[1] <= ip.lambf*ip.D and self.dT_dH[1][1] != 0:
+                raise ValueError(f"Problem in dT/dH the Enthalpy at node 1 {Hk_1[0]} and corresponding dT/dH {self.dT_dH[0][0]}")
+            '''if Hk_1[1]<0 or Hk_1[1]> ip.D*ip.lambf and self.dT_dH[1][1] != 1/ip.D:
+                raise ValueError(f"The 2*2 dT/dH Matrix is not constructed correctly the matrix is {self.dT_dH} nad it was expected to be {1/ip.D}")
+            if Hk_1[0]<0 or Hk_1[0]> ip.D*ip.lambf and self.dT_dH[0][0] != 1/ip.D:
+                raise ValueError("The 2*2 dT/dH Matrix is not constructed correctly the matrix is {self.dT_dH}")'''
 #===========================================================================================================================#
                         #Amorph_slop: - Defines the dT_dH slope matrix for Amorphous Material
 #===========================================================================================================================#
@@ -67,7 +78,7 @@ class temp_der():
         try:
             self.dT_dH = [[1/ip.D if Hk_1[0] <= 0 else ip.Tliq/(ip.D*ip.Tliq + ip.D*ip.lambf) if np.logical_and(0 <= Hk_1[0], Hk_1[0] <= ip.Hliq) else 1/ip.D, 0],
                           [0,1/ip.D if Hk_1[1] <= 0 else ip.Tliq/(ip.D*ip.Tliq + ip.D*ip.lambf) if np.logical_and(0 <= Hk_1[1], Hk_1[1] <= ip.Hliq) else 1/ip.D]]
-            self.verify()
+            self.verify(Hk_1,2)
         except ValueError as e:
             print(f"An error in dT_dH: {str(e)} following were the inputs")
             print(f"Hk+1 = {Hk_1}")
@@ -77,9 +88,9 @@ class temp_der():
 #===========================================================================================================================#
     def Cryst_slop(self, Hk_1):
         try:
-            self.dT_dH = [[1/ip.D if Hk_1[0] < 0 else 0 if Hk_1[0] == 0 else 1/ip.D, 0],
-                        [0,1/ip.D if Hk_1[1] < 0 else 0 if Hk_1[1] == 0 else 1/ip.D]]
-            self.verify()
+            self.dT_dH = np.array([[1/ip.D if Hk_1[0] < 0 else 0 if np.logical_and(Hk_1[0] >= 0, Hk_1[0] <= ip.D*ip.lambf)else 1/ip.D, 0],
+                                   [0,1/ip.D if Hk_1[1] < 0 else 0 if np.logical_and(Hk_1[1] >= 0, Hk_1[1] <= ip.D*ip.lambf) else 1/ip.D]])
+            self.verify(Hk_1,1)
             
         except ValueError as e:
             print(f"An error in dT_dH: {str(e)} following were the inputs")
