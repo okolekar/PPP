@@ -1,14 +1,10 @@
 '''Topic: PPP
-Library: - Mesh 
+Library: - Gridify
 #############################################################################################################################
-Importing the required standard libraries 
------------------------------------------------------------------------------------------------------------------------------
-Processed_Inputs -> Script where all the inputs are defined                                                                  
+Importing the required standard libraries                                                                
 #############################################################################################################################
 '''
-import math
 import numpy as np
-#import Processed_Inputs as ip
 '''
 #############################################################################################################################
 Class Mesh: -
@@ -17,86 +13,44 @@ The attributes of this class store all the mesh related information
 -----------------------------------------------------------------------------------------------------------------------------
 Attributes: -
 -------------
-    nl          ->      Node list
-    phi         ->      The Linear shape function
-    dphi        ->      The derivative of Linear shape function
-    J           ->      The Jacobian
+    xy_list             ->      x,y co-ordinate list with index as the node number
+    boundary_nodes      ->      Stores the boundary nodes 
+    N                   ->      The bi-Linear shape function
+    dN                  ->      The derivative of bi-Linear shape function
+    J                   ->      The Jacobian
+    det_J               ->      The determinant of Jacobian
+    node_list           ->      Stores the node number for each element
+    elementCordiante    ->      Stores the x,y co-ordinate for each element 
 -----------------------------------------------------------------------------------------------------------------------------
-Methods : -
+Main Methods : -
 =============================================================================================================================
-test_phi        ->      Tests if the shape function was correctly formed formulated
-test_dphi       ->      Tests if the derivative of the shape function was correctly formed formulated
-mesh_list       ->      This method provides the node number and corresponding z co-ordinate value
-update_phi      ->      Updates the Shape function as per the gauss points
-update_Jacobi   ->      Updates the Jacobi as per the element number
-update_dphi     ->      Updates the derivative of the shape function as per the element number.
-update_element  ->      Runs update_Jacobi and update_dphi with a condition that the element number is non negative.
+__mesh_list     ->  Generates mesh data
+update_N        ->  Updates the Shape function as per the gauss points
+update_Jacobi   ->  Updates the Jacobi and the determinant of the Jacobi as per the element number
+update_dN       ->  Updates the derivative of the shape function as per the element number.
+update_element  ->  Runs update_Jacobi, update_N and update_dN with a condition that the element number is non negative.
+-----------------------------------------------------------------------------------------------------------------------------
+Private Methods : -
+=============================================================================================================================
+__private_co_ornidate_list -> Generates the x and y co ordinates used internally for mesh generation
 #############################################################################################################################
 '''
 class Mesh():
     def __init__(self,n,m):
         self.xy_list          = []
-        self.boundary_nodes   = None
+        self.boundary_nodes   = {}
         self.N                = None
         self.dN               = None
         self.J                = None
+        self.det_J            = None
         self.node_list        = {}
         self.elementCordiante = {}
         self.__mesh_list(n,m)
     '''
 #############################################################################################################################
-Method test_phi(): -
-=============================================================================================================================
-The following tests were performed: -
-1) Interpolation Properity: - checks whether the value of the Shape function at it's node is 1 and at other node 0.
-2) Partition of unity property: - Checks if the sum of all the shape functions is 1 for any value passed
-#############################################################################################################################
-'''
-    def test_phi(self,zeta):
-        if zeta <=1 and zeta >= -1:
-#===========================================================================================================================#
-                                            #Interpolation property Check
-#===========================================================================================================================#
-            if self.N.any() > 1 or self.N.any() < 0:
-                raise ValueError(f"Incorrect Shape function, value exceeds 1 or is negative {self.N}")
-            elif zeta == 1 and (self.N[0] != 0 or self.N[1] != 1):
-                raise ValueError(f"Incorrect Shape function for the given zeta {self.N}")
-            elif zeta == -1 and (self.N[0] != 1 or self.N[1] != 0):
-                raise ValueError(f"Incorrect Shape function for the given zeta {self.N}")
-#===========================================================================================================================#
-                                           #Partition of unity property Check
-#===========================================================================================================================#
-            if self.N.sum()!=1:
-                raise ValueError(f"Incorrect Shape function for the given zeta {self.N}")
-            else:
-                print("And following tests were performed on Shape function")
-                print("1) Interpolation property check,")
-                print("2) Partition of unity property check,")
-                print("Shape function passed all the tests")
-                print("\n")
-                self.run_count += 1
-        else: 
-            raise ValueError("Value of zeta should be within [-1,1] and i should be int")
-        '''
-#############################################################################################################################
-Method test_dphi(): -
-=============================================================================================================================
-Checks if the sum of the derivative of the shape function at the constant open coefficient is zero
-#############################################################################################################################
-'''
-    def test_dphi(self):
-        ans = np.sum(self.dN)
-        if ans != 0:
-            print("test_dphi failed")
-            raise ValueError(f"Shape function evaluated to be {ans}")
-        else:
-            print("\nIn the Mesh module")
-            print("The derivative of Shape function passed the test.")
-            '''
-#############################################################################################################################
 Method __private_co_ornidate_list(): -
 =============================================================================================================================
-1) Generates the co ordinates for x and y co ordinates
+1) Generates the co ordinates for x and y direction
 2) Checks if the list was properly created by ensuring that last entry of the mesh list is equal to the total length
 #############################################################################################################################
 '''
@@ -107,7 +61,7 @@ Method __private_co_ornidate_list(): -
         if round(l[-1],5) != round(length,5) or len(l) == 0:
             print(f"\nError in Mesh module, the mesh list {l} is not generated correctly for length = {length}")
         return l
-
+#===========================================================================================================================#
     def __mesh_list(self,n,m):
         x = self.__private_co_ornidate_list(n,4)
         y = self.__private_co_ornidate_list(m,4)
@@ -120,18 +74,21 @@ Method __private_co_ornidate_list(): -
         for j in range(m):
             for i in range(n):
                 self.xy_list.append([x[i],y[j]])
+        self.boundary_nodes['Bottom_Nodes'] = [q for q in range(n)]
+        self.boundary_nodes['Top_Nodes'] = [(q + n*(m-1)) for q in range(n)]
+        self.boundary_nodes["Right_Nodes"] = [n*q+n-1 for q in range(m)]
+        self.boundary_nodes["Left_Nodes"] = [n*q for q in range(m)]
     '''
 #############################################################################################################################
 Method update_Jacobi(): -
 =============================================================================================================================
 1) Updates the  Jacobi
-2) Checks if the determinant of the Jacobi is positive and non zero
+2) Updates the determinant of the Jacobian
 #############################################################################################################################
 '''
     def update_Jacobi(self,i):
         self.J = np.matmul(self.dN,self.elementCordiante[i])
-        """if self.J <= 0 or self.J == 0:
-            raise ValueError("\nError in Mesh module,the determinant of Jacobi is negative or zero")"""
+        self.det_J = np.linalg.det(self.J)
     '''
 #############################################################################################################################
 Method update_dN(self,zeta,eta): -
@@ -142,7 +99,6 @@ Method update_dN(self,zeta,eta): -
     def update_dN(self,zeta,eta): 
         self.dN = (1/4)*np.array([[-(1-eta),(1-eta),(1+eta),-(1+eta)],
                                     [-(1-zeta),-(1+zeta),(1+zeta),(1-zeta)]])
-    
     '''
 #############################################################################################################################
 Method update_N(self,zeta,eta): -
