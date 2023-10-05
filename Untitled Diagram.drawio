@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-09-22T00:49:44.212Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="dqZqwItELHLBv-0aRryM" version="21.7.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-10-05T23:50:02.199Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="M2R1k938mdagbyzNQU5n" version="22.0.2" type="github">
   <diagram name="Page-1" id="D3Ey8p9wxDZOqgnlG4tk">
     <mxGraphModel dx="1434" dy="760" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -16,7 +16,7 @@
         <mxCell id="k1HMzf10UT7rga_kBx_9-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-3" target="k1HMzf10UT7rga_kBx_9-4" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-3" value="&lt;b&gt;&lt;u&gt;E&lt;/u&gt;&lt;/b&gt; = form the instance of elemental subroutine" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="k1HMzf10UT7rga_kBx_9-3" value="&lt;b&gt;&lt;u&gt;E&lt;/u&gt;&lt;/b&gt; = Initialize the instance of elemental subroutine" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="240.25" y="38" width="400" height="40" as="geometry" />
         </mxCell>
         <mxCell id="k1HMzf10UT7rga_kBx_9-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-4" target="k1HMzf10UT7rga_kBx_9-6" edge="1">
@@ -42,8 +42,8 @@
         <mxCell id="k1HMzf10UT7rga_kBx_9-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-8" target="k1HMzf10UT7rga_kBx_9-10" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-8" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;b&gt;&lt;i&gt;nrs&lt;/i&gt;&lt;/b&gt; = 0&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;b&gt;&lt;u&gt;Hk&lt;/u&gt;&amp;nbsp; =&amp;nbsp;&lt;/b&gt;Enthalpy values at previous time step&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;b style=&quot;&quot;&gt;&lt;u&gt;Hk_1&lt;/u&gt;&amp;nbsp; =&amp;nbsp;&lt;/b&gt;enthalpy at current time step&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;b&gt;&lt;u&gt;Hk&lt;/u&gt;&lt;/b&gt;&amp;nbsp;entahlpy at &#39;k&#39; Newton Raphson Step&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;u&gt;&lt;b&gt;Tk_1&lt;/b&gt;&lt;/u&gt; = Temperature current time&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
-          <mxGeometry x="200.25" y="178" width="480" height="120" as="geometry" />
+        <mxCell id="k1HMzf10UT7rga_kBx_9-8" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;b&gt;&lt;i&gt;nrs&lt;/i&gt;&lt;/b&gt; = 0&lt;/span&gt;&lt;br&gt;&lt;ol&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Initialize&amp;nbsp;&lt;u style=&quot;font-weight: bold;&quot;&gt;Hk&lt;/u&gt;&lt;b&gt;&amp;nbsp; =&amp;nbsp;&lt;/b&gt;Enthalpy values at previous time step&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;Initialize&amp;nbsp;&lt;b style=&quot;background-color: initial; text-decoration-line: underline;&quot;&gt;Hk_1&lt;/b&gt;&lt;b style=&quot;background-color: initial;&quot;&gt;&amp;nbsp; =&amp;nbsp;&lt;/b&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;enthalpy at current time step&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;set &lt;u style=&quot;background-color: initial; font-weight: bold;&quot;&gt;Hk&lt;/u&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&amp;nbsp;entahlpy at &#39;k&#39; Newton Raphson Step&lt;/span&gt;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;set &lt;b style=&quot;text-decoration-line: underline;&quot;&gt;Tk_1&lt;/b&gt;&lt;span style=&quot;background-color: initial;&quot;&gt; = Temperature current time&amp;nbsp;&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
+          <mxGeometry x="200.25" y="178" width="480" height="103" as="geometry" />
         </mxCell>
         <mxCell id="k1HMzf10UT7rga_kBx_9-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-10" target="k1HMzf10UT7rga_kBx_9-12" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -56,31 +56,31 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-10" value="While &lt;b&gt;&lt;i&gt;nrs&lt;/i&gt;&lt;/b&gt; &amp;lt; 0" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
+        <mxCell id="k1HMzf10UT7rga_kBx_9-10" value="While &lt;b&gt;&lt;i&gt;nrs&lt;/i&gt;&lt;/b&gt; &amp;lt; 20" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
           <mxGeometry x="245.25" y="318" width="390" height="30" as="geometry" />
         </mxCell>
         <mxCell id="k1HMzf10UT7rga_kBx_9-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-12" target="k1HMzf10UT7rga_kBx_9-14" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-12" value="&lt;b&gt;&lt;u&gt;Ht&lt;/u&gt;&lt;/b&gt; = enthalpy at the previous newton raphson step" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="k1HMzf10UT7rga_kBx_9-12" value="set &lt;b style=&quot;text-decoration-line: underline;&quot;&gt;Ht&lt;/b&gt; = enthalpy at the previous newton raphson step" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="230.25" y="368" width="420" height="20" as="geometry" />
         </mxCell>
         <mxCell id="k1HMzf10UT7rga_kBx_9-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-14" target="k1HMzf10UT7rga_kBx_9-16" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-14" value="&lt;b&gt;&lt;u&gt;E&lt;/u&gt;&lt;/b&gt;.get_param&amp;nbsp; = update the Elemental Subroutine to form&amp;nbsp;&lt;br&gt;&#39;E.&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;&lt;u style=&quot;border-color: var(--border-color);&quot;&gt;G&lt;/u&gt;&lt;/b&gt;&#39; (Residual Vector) = attribute of E class and&lt;br&gt;&#39;E.&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;&lt;u style=&quot;border-color: var(--border-color);&quot;&gt;dG&lt;/u&gt;&lt;/b&gt;&#39; (Tangent Stiffness Matrix) = attribute of E class&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="k1HMzf10UT7rga_kBx_9-14" value="run &lt;b style=&quot;text-decoration-line: underline;&quot;&gt;E&lt;/b&gt;.get_param&amp;nbsp; = update the Elemental Subroutine to form&amp;nbsp;&lt;br&gt;find &#39;E.&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;&lt;u style=&quot;border-color: var(--border-color);&quot;&gt;G&lt;/u&gt;&lt;/b&gt;&#39; (Residual Vector) = attribute of E class and&lt;br&gt;find &#39;E.&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;&lt;u style=&quot;border-color: var(--border-color);&quot;&gt;dG&lt;/u&gt;&lt;/b&gt;&#39; (Tangent Stiffness Matrix) = attribute of E class&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="184" y="408" width="512.5" height="70" as="geometry" />
         </mxCell>
         <mxCell id="k1HMzf10UT7rga_kBx_9-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-16" target="k1HMzf10UT7rga_kBx_9-18" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-16" value="Apply the Boundary Condition at the last node of the &lt;b&gt;&lt;u&gt;G&lt;/u&gt;&lt;/b&gt; and &lt;u&gt;&lt;b&gt;dG&lt;/b&gt;&lt;/u&gt; vectors and matrices" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="k1HMzf10UT7rga_kBx_9-16" value="Apply the Boundary Condition at the resp. node of the &lt;b&gt;&lt;u&gt;G&lt;/u&gt;&lt;/b&gt; and &lt;u&gt;&lt;b&gt;dG&lt;/b&gt;&lt;/u&gt; vectors and matrices" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="186.5" y="498" width="510" height="30" as="geometry" />
         </mxCell>
         <mxCell id="k1HMzf10UT7rga_kBx_9-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-18" target="k1HMzf10UT7rga_kBx_9-20" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-18" value="Update&amp;nbsp; as per the formula &lt;b&gt;&lt;u&gt;Hk_1&lt;/u&gt;&lt;/b&gt; = &lt;b&gt;&lt;u&gt;Hk_1&lt;/u&gt;&lt;/b&gt; - &lt;b&gt;&lt;u&gt;dG/G&lt;/u&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="k1HMzf10UT7rga_kBx_9-18" value="Update enthalpy as per the formula &lt;b&gt;&lt;u&gt;Hk_1&lt;/u&gt;&lt;/b&gt; = &lt;b&gt;&lt;u&gt;Hk_1&lt;/u&gt;&lt;/b&gt; - &lt;b&gt;&lt;u&gt;dG/G&lt;/u&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="261.5" y="548" width="360" height="20" as="geometry" />
         </mxCell>
         <mxCell id="k1HMzf10UT7rga_kBx_9-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-20" target="k1HMzf10UT7rga_kBx_9-23" edge="1">
