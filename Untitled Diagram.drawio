@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-10-05T23:52:11.201Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="yZhyo15fYkGdikT0Z5rY" version="22.0.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-10-05T23:53:56.769Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="OImavfU3fnuX24MvVX0w" version="22.0.2" type="github">
   <diagram name="Page-1" id="D3Ey8p9wxDZOqgnlG4tk">
-    <mxGraphModel dx="1434" dy="760" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="989" dy="524" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -163,11 +163,11 @@
         <mxCell id="k1HMzf10UT7rga_kBx_9-37" value="display the solution converged in &lt;b&gt;&lt;i&gt;nrs&lt;/i&gt;&lt;/b&gt; newton raphson step" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="550.25" y="850" width="180" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="vaHdqAgPK7z6LxYDH7Z_-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-49" target="vaHdqAgPK7z6LxYDH7Z_-18" edge="1">
+        <mxCell id="PzUJ5ATX8jlTYSOv5ZQm-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="k1HMzf10UT7rga_kBx_9-49" target="vaHdqAgPK7z6LxYDH7Z_-18">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="k1HMzf10UT7rga_kBx_9-49" value="Raise Value error" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="218.25" y="913" width="118" height="17" as="geometry" />
+        <mxCell id="k1HMzf10UT7rga_kBx_9-49" value="Raise Value error and display graph" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="199" y="913" width="213" height="17" as="geometry" />
         </mxCell>
         <mxCell id="k1HMzf10UT7rga_kBx_9-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="k1HMzf10UT7rga_kBx_9-81" target="k1HMzf10UT7rga_kBx_9-6" edge="1">
           <mxGeometry relative="1" as="geometry">
@@ -184,7 +184,7 @@
           <mxGeometry x="250.95000000000005" y="1041" width="384.3" height="60" as="geometry" />
         </mxCell>
         <mxCell id="vaHdqAgPK7z6LxYDH7Z_-18" value="End" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" parent="1" vertex="1">
-          <mxGeometry x="252.18000000000006" y="949" width="50.15" height="14" as="geometry" />
+          <mxGeometry x="280.43000000000006" y="951" width="50.15" height="14" as="geometry" />
         </mxCell>
         <mxCell id="vaHdqAgPK7z6LxYDH7Z_-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="vaHdqAgPK7z6LxYDH7Z_-29" target="k1HMzf10UT7rga_kBx_9-10" edge="1">
           <mxGeometry relative="1" as="geometry">
