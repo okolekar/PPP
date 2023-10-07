@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-10-07T16:59:07.428Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="gd-lyOOuyKaGcbteTYKB" version="22.0.4" type="github">
+<mxfile host="app.diagrams.net" modified="2023-10-07T16:59:37.596Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36" etag="w0ILQk3ovA4x5M5QzEuv" version="22.0.4" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1049" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -8,71 +8,71 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-83" value="Start" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="164.25" y="170" width="44" height="14" as="geometry" />
+          <mxGeometry x="142.25" y="170" width="44" height="14" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-84" value="End" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="437" y="750" width="32.5" height="16" as="geometry" />
+          <mxGeometry x="415" y="750" width="32.5" height="16" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="B5U1O5-QQuCSI6vYpxnP-86" target="B5U1O5-QQuCSI6vYpxnP-88">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-86" value="&lt;ol&gt;&lt;li&gt;Using analytical solution, find the initial position of the interface &#39;s&#39;.&lt;/li&gt;&lt;li&gt;Mesh both the domains and define the initial temperature distribution.&lt;/li&gt;&lt;/ol&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="234.5" y="157" width="436.75" height="40" as="geometry" />
+          <mxGeometry x="212.5" y="157" width="436.75" height="40" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-87" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="B5U1O5-QQuCSI6vYpxnP-88" target="B5U1O5-QQuCSI6vYpxnP-91">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-88" value="Initialize&amp;nbsp;&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;&lt;u style=&quot;border-color: var(--border-color);&quot;&gt;E&amp;nbsp;&lt;/u&gt;&lt;/b&gt;as an instance of elemental subroutine and find the global material parameters from the Element Subroutine" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="199.5" y="230" width="506.75" height="50" as="geometry" />
+          <mxGeometry x="177.5" y="230" width="506.75" height="50" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-89" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="B5U1O5-QQuCSI6vYpxnP-91" target="B5U1O5-QQuCSI6vYpxnP-93">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-137" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="B5U1O5-QQuCSI6vYpxnP-91" target="B5U1O5-QQuCSI6vYpxnP-128">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="750" y="420.0000000000001" as="targetPoint" />
+            <mxPoint x="728" y="420.0000000000001" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="760" y="320" />
-              <mxPoint x="760" y="670" />
+              <mxPoint x="738" y="320" />
+              <mxPoint x="738" y="670" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-91" value="For &lt;b&gt;&lt;i&gt;time &lt;/i&gt;&lt;/b&gt;&amp;lt; &lt;b&gt;&lt;i&gt;End_time&lt;/i&gt;&lt;/b&gt;" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="343.25" y="310" width="220" height="20" as="geometry" />
+          <mxGeometry x="321.25" y="310" width="220" height="20" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-92" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="B5U1O5-QQuCSI6vYpxnP-93" target="B5U1O5-QQuCSI6vYpxnP-98">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="453.25" y="490" as="targetPoint" />
+            <mxPoint x="431.25" y="490" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-93" value="&lt;div style=&quot;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;b&gt;&lt;i&gt;nrs&lt;/i&gt;&lt;/b&gt; = 0&lt;/span&gt;&lt;br&gt;&lt;ol&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Store all the previous&lt;b&gt;&amp;nbsp;&lt;/b&gt;&lt;/span&gt;global material parameters in respective variables&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;find new &#39;s&#39; using the formula (3.11a.)&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;Re-mesh the solid and liquid domains for a new length.&amp;nbsp;&lt;/li&gt;&lt;li style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Run the elemental subroutine for the new domains.&amp;nbsp;&lt;/span&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="213.25" y="350" width="480" height="103" as="geometry" />
+          <mxGeometry x="191.25" y="350" width="480" height="103" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-94" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="B5U1O5-QQuCSI6vYpxnP-98">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="453.25" y="520" as="sourcePoint" />
+            <mxPoint x="431.25" y="520" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-97" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="B5U1O5-QQuCSI6vYpxnP-98" target="B5U1O5-QQuCSI6vYpxnP-100">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-98" value="Apply the Dirichlet Boundary condition" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="356" y="490" width="195.25" height="30" as="geometry" />
+          <mxGeometry x="334" y="490" width="195.25" height="30" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-136" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="B5U1O5-QQuCSI6vYpxnP-100" target="B5U1O5-QQuCSI6vYpxnP-128">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-100" value="Find the new temperature distribution in both the domains as per the formulas&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;(3.12a) and (3.13a)" style="rounded=1;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="196.62" y="540" width="512.5" height="70" as="geometry" />
+          <mxGeometry x="174.62" y="540" width="512.5" height="70" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-138" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" target="B5U1O5-QQuCSI6vYpxnP-91">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="453.66666666666674" y="650" as="sourcePoint" />
-            <mxPoint x="343.25" y="270" as="targetPoint" />
+            <mxPoint x="431.66666666666674" y="650" as="sourcePoint" />
+            <mxPoint x="321.25" y="270" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="454" y="670" />
-              <mxPoint x="120" y="670" />
-              <mxPoint x="120" y="320" />
+              <mxPoint x="432" y="670" />
+              <mxPoint x="98" y="670" />
+              <mxPoint x="98" y="320" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -80,10 +80,10 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-128" value="&lt;u style=&quot;&quot;&gt;Record the new values of temperature and position of interface&lt;/u&gt;" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="261.48" y="640" width="384.3" height="60" as="geometry" />
+          <mxGeometry x="239.48000000000002" y="640" width="384.3" height="60" as="geometry" />
         </mxCell>
         <mxCell id="B5U1O5-QQuCSI6vYpxnP-132" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Method: -Stefan_Problem_solver&lt;/font&gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="389.37" y="70" width="135" height="37" as="geometry" />
+          <mxGeometry x="367.37" y="70" width="135" height="37" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
