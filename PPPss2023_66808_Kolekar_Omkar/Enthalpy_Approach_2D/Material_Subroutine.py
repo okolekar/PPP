@@ -1,0 +1,155 @@
+'''
+Topic:   Programming of the 2D FE Implementation of Stefan Problem and the Enthalpy Problem.
+Program: The Enthalpy Problem               Matriculation Number: 66808
+Library: - Material Subroutine
+#############################################################################################################################
+Importing the required libraries : -
+-----------------------------------------------------------------------------------------------------------------------------
+Processed_Inputs -> Script where all the inputs are defined
+slope_matrix -> Calculates the dT/dH matrix
+#############################################################################################################################
+'''
+import numpy as np
+import Processed_Inputs as mm
+'''
+#############################################################################################################################
+Class Material_model: -
+=============================================================================================================================
+This is a parent class and hence the parameter related methods have parent word
+The methods in the parent class are only called by the child classes 
+-----------------------------------------------------------------------------------------------------------------------------
+Attributes: -
+-------------
+    b,M,N       ->  Material specific vectors 
+    Ele         ->  Instance of Mesh class stores mesh related parameters passed by the FEA class
+    runcount    ->  Checks if the method was already called before
+-----------------------------------------------------------------------------------------------------------------------------
+Other Variables: -
+------------------
+    He_1 ->  corresponds to the current enthalpy from the NRS scheme
+    He   ->  corresponds to the enthalpy at the previous time step
+-----------------------------------------------------------------------------------------------------------------------------
+Methods: -
+=============================================================================================================================
+    get_parent_param -> generates the b,M,N vector/materices
+    Quad_Integ -> Performs the Gaussian Integration also tests if the Jacobi calculated is correct
+#############################################################################################################################
+'''
+class Material_model():
+    def __init__(self,Mesh,runcount):
+        self.b = np.zeros(4).reshape(-1,1)
+        self.M = 0
+        self.N = 0
+        self.Ele = Mesh
+        self.runcount = runcount
+
+    def get_parent_param(self,element):
+        b_dN2 = self.Ele.dN[0].reshape(-1,1)*self.Ele.det_J
+        b_dN = b_dN2
+        index = 0
+        for i in self.Ele.node_list[element]:          
+            if i not in self.Ele.boundary_nodes['Bottom_Nodes'] and i not in self.Ele.boundary_nodes['Right_Nodes']:
+                    b_dN[index] = 0
+            index = index + 1
+        sum = np.sum(b_dN)
+        b = sum*b_dN
+        M = np.matmul(self.Ele.N,self.Ele.N.reshape(1,-1))*self.Ele.det_J
+        N = np.matmul(self.Ele.dN.T,self.Ele.dN)*self.Ele.det_J
+        return[b,M,N]
+
+    def Quad_Integ(self,ele_no):
+        gpts = [-0.577350269189626, 0.577350269189626]
+        check_J = 0
+        for zeta in gpts:
+            for eta in gpts:
+                self.Ele.update_element(zeta,eta,ele_no)
+                [b,M,N] = self.get_parent_param(ele_no)
+                is_symmetric = np.array_equal(M, M.T)
+                if is_symmetric:
+                    self.M = self.M + M
+                else:
+                    raise ValueError(f"The M is not symmetric for element{ele_no}") 
+                is_symmetric = np.array_equal(N, N.T)
+                if is_symmetric:
+                    self.N = self.N + N
+                else:
+                    raise ValueError(f"The N is not symmetric for element{ele_no}")
+                self.b = self.b + b
+                check_J = check_J + self.Ele.det_J                                 #Testing Jacobi 
+        n = self.Ele.node_list[ele_no][0]
+        x1 = self.Ele.xy_list[n][0]
+        y1 = self.Ele.xy_list[n][1]
+        n = self.Ele.node_list[ele_no][2]
+        x3 = self.Ele.xy_list[n][0]
+        y3 = self.Ele.xy_list[n][1]
+        area = (x3-x1)*(y3-y1)
+        if round(check_J,5) != round(area,5):
+             print("Jacobian failed")
+        self.b = -self.b
+'''
+#############################################################################################################################
+Child Class Amorphus_model: -
+=============================================================================================================================
+Inherited by the Material_model
+-----------------------------------------------------------------------------------------------------------------------------
+Attributes: -
+-------------
+    dG   ->  Tangent Stiffness type Matrix 
+-----------------------------------------------------------------------------------------------------------------------------
+Other Variables: - 
+------------------
+    He_1 ->  corresponds to the current enthalpy from the NRS scheme
+    He   ->  corresponds to the enthalpy at the previous time step
+-----------------------------------------------------------------------------------------------------------------------------
+Methods: -
+=============================================================================================================================
+    get_param -> generates the G and dG vector/materix. It uses slope function which calculates dT/dH matrix to which 
+                 an 1 or 2 integer argument along with He_1 is passed. I use 2 to tell the slope library to use the 
+                 amorphous method to calculate the dT/dH matrix.
+#############################################################################################################################
+'''
+class Amorphus_model(Material_model):
+    def __init__(self,Mesh,runcount):
+        super().__init__(Mesh,runcount)
+        if self.runcount<1:
+            print('Amorphous routine activated in Material subroutine')
+            self.runcount +=1
+
+    def get_param(self,He_1,ele_no):
+        self.Ele.update_element(ele_no)
+        self.b = 0
+        self.M = 0
+        self.N = 0
+        self.Quad_Integ(ele_no)
+        self.runcount +=1
+'''
+#############################################################################################################################
+Child Class Crystal_model: -
+=============================================================================================================================
+Inherited by the Material_model
+-----------------------------------------------------------------------------------------------------------------------------
+Attributes: -
+-------------
+    dG   ->  Tangent Stiffness type Matrix 
+-----------------------------------------------------------------------------------------------------------------------------
+Other Variables: - 
+    He_1 ->  corresponds to the current enthalpy from the NRS scheme
+-----------------------------------------------------------------------------------------------------------------------------
+Methods: -
+=============================================================================================================================
+    get_param -> generates the material Parameters
+#############################################################################################################################
+'''
+class Crystal_model(Material_model):
+    def __init__(self,Mesh,runcount):
+        super().__init__(Mesh,runcount)
+        if self.runcount<1:
+            print('Crystalline routine activated in Material subroutine')
+            self.runcount +=1
+
+    def get_param(self,He_1,ele_no):
+        self.b = np.zeros(4).reshape(-1,1)
+        self.M = 0
+        self.N = 0
+        self.Quad_Integ(ele_no)
+        self.runcount +=1
